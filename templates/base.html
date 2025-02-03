@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PVP POLYTECHNIC</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .chatbot-icon {
+      position: fixed;
+      bottom: 60px;
+      right: 20px;
+      background-color: black;
+      color: white;
+      border-radius: 10%;
+      width: 100px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+       }
+
+    .chatbot-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .chatbot-window {
+      display: none;
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 300px;
+      height: 400px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .chatbot-header {
+      background-color: #0078d7;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+        }
+
+    .chatbot-content {
+      padding: 10px;
+      height: calc(100% - 40px);
+      overflow-y: auto;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .notification-bar{
+        background-color:#0000ff;
+        color:red;
+        padding:10px;
+        font-size:2.5rem;
+        overflow:hidden;
+        white-space:nowrap;
+        text-align:center;
+        }
+    .marquee{
+        font-weight:bold;
+        }
+
+
+  </style>
+</head>
+<body>
+
+    <header>
+        <div id="notification-bar"><marquee diretion="left"><font color="white"> All the diploma courses are available in this pvp college</font></marquee></div>
+
+
+        <h1><font color="red"><font size="80">PVP POLYTECHNIC</font></font></h1>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="PVP Polytechnic Logo" class="logo">
+
+        <nav>
+            <ul>
+            <li><a href="{{ url_for('home') }}" >Home</a> </li>
+                <li><a href="{{ url_for('about') }}" >About Us</a></li>
+                <li><a href="{{ url_for('contact') }}" >Contact</a></li>
+                <li><a href="{{ url_for('gallery') }}" >Gallery</a></li>
+                <li><a href="{ url_for('admin portal') }}" >Admin portal</a></li>
+                <li><a href="{ url_for('courses') }}" >Courses</a></li>
+                <li><a href="{ url_for('results section') }}" >Results section</a></li>
+
+       </ul>
+
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <div class="chatbot-icon" onclick="toggleChatbot()">
+    💬 AI chatbot
+  </div>
+
+  <div class="chatbot-window" id="chatbot">
+    <div class="chatbot-header">
+      Chatbot
+      <button class="close-btn" onclick="toggleChatbot()">✖</button>
+    </div>
+    <div class="chatbot-content">
+      <p>Hello! How can I assist you today?</p>
+    </div>
+  </div>
+
+  <script>
+    function toggleChatbot() {
+      const chatbot = document.getElementById('chatbot');
+      if (chatbot.style.display === 'block') {
+        chatbot.style.display = 'none';
+      } else {
+        chatbot.style.display = 'block';
+      }
+ }
+</script>
+
+    </script>
+    <footer>
+        <p><marquee direction="left"><font color="white">&copy; 2025 PVP Polytechnic. All rights reserved.</font></marquee> </p>
+    </footer>
+</body>
+</html>
+

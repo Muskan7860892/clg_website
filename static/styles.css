@@ -1,0 +1,112 @@
+/* General Body and Layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('/static/images/background1.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    width:100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    }
+
+/* Header Styling */
+header {
+    background: rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 100px;
+    color: #fff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    margin: 20;
+}
+
+/* Logo Styling */
+header.logo {
+    width: 100px;
+    height: 100px;
+}
+
+/* Navigation Styling */
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centers the items horizontally */
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+
+    background: brown;
+}
+
+nav ul li a:hover {
+    background: #ffcc00;
+    color: #000;
+}
+
+/* Main Content Styling */
+main {
+    padding: 100px;
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+
+}
+img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .contact-details {
+            margin-top: 20px;
+            text-align: left;
+    }
+/* Footer Styling */
+footer {
+    background: rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 2px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    color: #fff;
+}
+.marquee{
+        font-weight:bold;
+        }
+.center-content {
+    text-align: center; /* Center-align the text */
+}
+
+.center-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.center-content p {
+    font-size: 1.2rem;
+    color:#666;
+}

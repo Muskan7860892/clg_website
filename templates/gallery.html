@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gallery</title>
+    <style>
+        body {
+          background: url('/static/images/blur_background.jpg') no-repeat center center fixed;
+          background-size: cover;
+          margin: 0;
+          padding: 0;
+          font-size: 30px;
+          overflow-x: hidden;
+          overflow-y: hidden;
+        }
+    </style>
+
+</head>
+<body>
+<h2><center><font color="orange">Gallery Of PVP College</font></center></h2>
+    <center><div class="gallery">
+        <img src="{{ url_for('static', filename='images/campus1.jpg') }}" alt="Campus Photo 1">
+        <img src="{{ url_for('static', filename='images/campus2.jpg') }}" alt="Campus Photo 2">
+        <img src="{{ url_for('static', filename='images/campus3.jpg') }}" alt="Campus Photo 3">
+        <img src="{{ url_for('static', filename='images/campus4.jpg') }}" alt="Campus Photo 4">
+        <img src="{{ url_for('static', filename='images/campus5.jpg') }}" alt="Campus Photo 5">
+
+    </div>
+        </center>
+
+</body>
+</html>
