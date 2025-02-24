@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Process</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: black;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        h2, h3 {
+            color:#7D0552;
+        }
+        p, li {
+            font-size: 18px;
+            text-align: left;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f0f0f0;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #ff6600;
+            color: white;
+        }
+        a {
+            display: inline-block;
+            background: red;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        a:hover {
+            background:green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Admission Process</h2>
+    <p>Follow the steps below to apply for admission:</p>
+    <ul>
+        <li>✅ <a href="application-form.html" target="_blank">Admission process</a>.</li>
+        <li>✅ <a href="{{ url_for('documents') }}" target="_blank">Submit the required documents</a>.</li>
+    </ul>
+
+    <!-- ✅ Eligibility Section -->
+    <h3>Eligibility Criteria</h3>
+    <p>To be eligible for admission, candidates must fulfill the following requirements:</p>
+    <ul>
+        <li>🎓 Must have completed 10th or 12th grade from a recognized board.</li>
+        <li>✅ Eligible Boards:</li>
+        <ul>
+            <li>📘 SSLC (State Board)</li>
+            <li>📗 ICSE (Indian Certificate of Secondary Education)</li>
+            <li>📕 CBSE (Central Board of Secondary Education)</li>
+        </ul>
+        <li>📜 Minimum percentage required: 35% (may vary by program).</li>
+        <li>🌍 International students must provide equivalent certification.</li>
+    </ul>
+
+    <!-- ✅ Intake Capacity Section -->
+    <h3>Intake Capacity for Branches</h3>
+    <table>
+        <tr>
+            <th>Branches(Aided/Unaided) Government </th>
+            <th>Intake Capacity</th>
+        </tr>
+        <tr><td>🏗️ Civil Engineering</td><td>60</td></tr>
+        <tr><td>⚙️ Mechanical Engineering</td><td>60</td></tr>
+        <tr><td>💻 Computer Engineering</td><td>60</td></tr>
+        <tr><td>📡 Electronics & Telecommunication</td><td>60</td></tr>
+        <tr><td>⚡ Electrical Engineering</td><td>60</td></tr>
+        <tr><td>🖥️ Information Science & Engineering</td><td>60</td></tr>
+        <tr><td>🚗 Automobile Engineering</td><td>60</td></tr>
+        <tr><td>🔬 Electronics Instrumentation & Control</td><td>60</td></tr>
+        <tr><td>👗 Apparel Design & Fabrication Technology(Unaided)</td><td>40</td></tr>
+    </table>
+
+    <!-- ✅ Notes Section -->
+    <h3>📌 Important Notes</h3>
+    <ul>
+        <marquee behavior="scroll" direction="left" scrollamount="5" style="background: #FFC0CB; color: black; font-size: 18px; padding: 10px; border-radius: 5px; font-weight: bold;">
+    🔹 1️⃣ Seat allotment as per DTE Norms/Seat Matrix. &nbsp;&nbsp;&nbsp; 🔹 2️⃣ Fee Structure will be as per DTE Norms.
+        </marquee>
+    </ul>
+
+    <!-- ✅ Navigation Buttons -->
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</div>
+
+
+</body>
+</html>

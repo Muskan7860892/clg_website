@@ -1,0 +1,34 @@
+
+
+# File to store the view count
+VIEW_COUNT_FILE = "views.txt"
+
+def get_views():
+    """Read the current view count from the file."""
+    try:
+        with open(VIEW_COUNT_FILE, "r") as file:
+            return int(file.read().strip())
+    except (FileNotFoundError, ValueError):
+        return 0  # If file not found or empty, start with 0 views.
+
+def update_views():
+    """Increase the view count and save it back to the file."""
+    views = get_views() + 1
+    with open(VIEW_COUNT_FILE, "w") as file:
+        file.write(str(views))
+    return views
+
+@app.route('/')
+def home():
+    views = update_views()  # Update and get the new view count
+    return render_template('home.html', views=views)
+
+@app.route('/')
+def about():
+    return render_template('about.html', views=views)
+
+@app.route('/')
+def gallery():
+    return render_template('gallery.html', views=views)
+
+

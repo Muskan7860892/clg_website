@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Events</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            font-family: Arial, sans-serif;
+        }
+
+        /* ✅ Fixed Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #ff6600;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        /* ✅ Navigation Links */
+        .nav {
+            margin-top: 10px;
+        }
+
+        .nav a {
+            display: inline-block;
+            background: black;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .nav a:hover {
+            background: darkgray;
+        }
+
+        /* ✅ Content Below Header */
+        .content {
+            margin-top: 100px; /* Space below fixed header */
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* ✅ Event List */
+        .sports-events ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sports-events li {
+            background: lightgray;
+            padding: 10px;
+            margin: 10px auto;
+            width: 50%;
+            border-radius: 5px;
+        }
+
+        /* ✅ Responsive Image Gallery */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gallery img {
+            width: 250px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* ✅ Full-Screen Overlay */
+        .fullscreen-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .fullscreen-overlay img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensures the full image is visible */
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- ✅ Fixed Header -->
+<div class="header">
+    Upcoming Sports Events
+    <div class="nav">
+        <a href="/">Back to Home</a>
+        <a href="/gallery">Back to Gallery</a>
+    </div>
+</div>
+
+<!-- ✅ Page Content -->
+<div class="content">
+    <div class="sports-events">
+        <ul>
+            <li>🏀 Basketball Tournament</li>
+            <li>⚽ Football Championship</li>
+            <li>🏸 Badminton Open</li>
+            <li>🏃‍♂️ Athletics Meet</li>
+        </ul>
+    </div>
+
+    <!-- ✅ Gallery Section -->
+    <div class="gallery">
+        <img src="{{ url_for('static', filename='images/basketball.jpg') }}" alt="Basketball" onclick="openFullScreen(this)">
+        <img src="{{ url_for('static', filename='images/football.jpg') }}" alt="Football" onclick="openFullScreen(this)">
+        <img src="{{ url_for('static', filename='images/running.jpg') }}" alt="Running" onclick="openFullScreen(this)">
+        <img src="{{ url_for('static', filename='images/batmiton.jpg') }}" alt="Badminton" onclick="openFullScreen(this)">
+        <img src="{{ url_for('static', filename='images/kabbadi.jpg') }}" alt="Kabaddi" onclick="openFullScreen(this)">
+        <img src="{{ url_for('static', filename='images/kho kho.jpg') }}" alt="Kho Kho" onclick="openFullScreen(this)">
+    </div>
+</div>
+
+<!-- ✅ Full-Screen Image Overlay -->
+<div class="fullscreen-overlay" id="fullscreenOverlay" onclick="closeFullScreen()">
+    <img id="fullscreenImage" src="" alt="Full-Screen Image">
+</div>
+
+<!-- ✅ JavaScript for Full-Screen Functionality -->
+<script>
+    function openFullScreen(imgElement) {
+        document.getElementById("fullscreenImage").src = imgElement.src;
+        document.getElementById("fullscreenOverlay").style.display = "flex";
+    }
+
+    function closeFullScreen() {
+        document.getElementById("fullscreenOverlay").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
