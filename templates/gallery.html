@@ -3,31 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gallery</title>
+    <title>Gallery</title>
     <style>
         body {
-          background: url('/static/images/blur_background.jpg') no-repeat center center fixed;
-          background-size: cover;
-          margin: 0;
-          padding: 0;
-          font-size: 30px;
-          overflow-x: hidden;
-          overflow-y: hidden;
+            background: url('/static/images/blur_background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .nav {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 200px;
+            background: rgba(0, 0, 0, 0.8);
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav a {
+            display: block;
+            width: 150px;
+            padding: 10px;
+            margin: 10px;
+            background: #ff6600;;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .nav a:hover {
+            background: darkorange;
+        }
+
+        /* Gallery */
+        .content {
+            margin-left: 220px; /* Make space for the sidebar */
+            text-align: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gallery img {
+            width: 250px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
         }
     </style>
-
 </head>
+
 <body>
-<h2><center><font color="orange">Gallery Of PVP College</font></center></h2>
-    <center><div class="gallery">
+
+<!-- ✅ Sidebar Navigation -->
+<div class="nav">
+    <a href="/sports">Sports Events</a>
+    <a href="/nss">NSS Events</a>
+    <a href="/campus">Campus</a>
+    <a href="/library">Library</a>
+    <a href="/">Back to Home</a>
+</div>
+
+<!-- ✅ Gallery Content -->
+<div class="content">
+    <h2><font color="red">Gallery Of PVP College</font></h2>
+
+    <div class="gallery">
         <img src="{{ url_for('static', filename='images/campus1.jpg') }}" alt="Campus Photo 1">
         <img src="{{ url_for('static', filename='images/campus2.jpg') }}" alt="Campus Photo 2">
         <img src="{{ url_for('static', filename='images/campus3.jpg') }}" alt="Campus Photo 3">
         <img src="{{ url_for('static', filename='images/campus4.jpg') }}" alt="Campus Photo 4">
         <img src="{{ url_for('static', filename='images/campus5.jpg') }}" alt="Campus Photo 5">
-
     </div>
-        </center>
+</div>
 
 </body>
 </html>

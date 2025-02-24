@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: Algerian, sans-serif;
       margin: 0;
       padding: 0;
       height: 100vh;
@@ -22,8 +22,8 @@
       position: fixed;
       bottom: 60px;
       right: 20px;
-      background-color: brown;
-      color: white;
+      background-color: #ADDFFF;
+      color: black;
       border-radius: 10%;
       width: 100px;
       height: 40px;
@@ -56,7 +56,7 @@
     }
 
     .chatbot-header {
-      background-color: #0078d7;
+      background-color: #ADDFFF;
       color: white;
       padding: 10px;
       text-align: center;
@@ -97,13 +97,45 @@
   </style>
 </head>
 <body>
+<div class="background"></div>
+
+<div id="background-slider"></div>
+
+
+<script>
+    const images = [
+        "/static/images/background1.jpg",
+        "/static/images/background5.jpg",
+        "/static/images/background8.jpg"
+         "/static/images/background6.jpg"
+    ];
+
+    let currentIndex = 0;
+
+    function changeBackground() {
+        const bg = document.getElementById("background-slider");
+        bg.style.backgroundImage = `url('${images[currentIndex]}')`;
+        bg.classList.add("fade-in");
+
+        currentIndex = (currentIndex + 1) % images.length; // Loop through images
+    }
+
+    setInterval(changeBackground, 4000); // Change every 4 seconds
+
+    // Initial background setup
+    window.onload = changeBackground;
+</script>
+
 
     <header>
-        <div id="notification-bar"><marquee diretion="left"><font color="black"> All the diploma courses are available in this pvp college</font></marquee></div>
 
 
-        <h1><font color="white"><font size="80">PVP POLYTECHNIC</font></font></h1>
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="PVP Polytechnic Logo" class="logo">
+            <h1><font color="red"><font size="80">PVP POLYTECHNIC</font></font></h1>
+
+        <!-- View Counter inside a <span> tag -->
+<p class="view-counter">Total Views: <span>{{ views }}</span></p>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="PVP Polytechnic Logo" class="logo"><br><br>
+        <div id="notification-bar"><marquee diretion="left"><font color="01F9C6"> All the diploma courses are available in this pvp college</font></marquee></div><br><br>
 
         <nav>
             <ul>
@@ -111,9 +143,9 @@
                 <li><a href="{{ url_for('about') }}" >About Us</a></li>
                 <li><a href="{{ url_for('contact') }}" >Contact</a></li>
                 <li><a href="{{ url_for('gallery') }}" >Gallery</a></li>
-                <li><a href="{ url_for('admin portal') }}" >Admin portal</a></li>
+                <li><a href="{{ url_for('admission') }}">Admission Process</a></li>
                 <li><a href="{ url_for('courses') }}" >Courses</a></li>
-                <li><a href="{ url_for('results section') }}" >Results section</a></li>
+                <li><a href="{ url_for('admin portal') }}" >Admin portal</a></li>
 
        </ul>
 
@@ -146,11 +178,10 @@
       }
  }
 </script>
-
-    </script>
-    <footer>
-        <p><marquee direction="left"><font color="black">&copy; 2025 PVP Polytechnic. All rights reserved.</font></marquee> </p>
-    </footer>
 </body>
+    <footer>
+
+        <p><font color="01F9C6">&copy; 2025 PVP Polytechnic. All rights reserved.</font></p>
+    </footer>
 </html>
 
