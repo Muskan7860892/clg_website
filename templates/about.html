@@ -3,45 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>about</title>
+    <title>About Us</title>
     <style>
         body {
-          margin: 0;
-          padding: 0;
-          background: url('/static/images/background.jpg');
-          background-size: cover;
-          height: 100vh;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-position: center;
-          background-repeat: no-repeat;
-          font-size: 30px;
-          overflow-x: hidden;
-          overflow-y: hidden;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+             overflow-x: hidden;
+             overflow-y: auto;
+             background-image: url('{{ url_for("static", filename="images/background11.jpg") }}');
+             background-size: cover;
+             background-position: center;
+             background-attachment: fixed;
         }
-        .text-box {
-        background: f4f8d3; /* Semi-transparent black */
-        color: white;  /* Text color */
-        padding: 15px; /* Space inside the box */
-        border-radius: 5px; /* Rounded corners */
-        display: inline-block;
+        /* Main Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .tab {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #ddd;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .tab:hover, .tab.active {
+            background-color: #ff6600;
+            color: white;
         }
 
+        /* Content Sections */
+        .content {
+            display: none;
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            text-align: left;
+        }
+        .content.active-content {
+            display: block;
+        }
+        .content {
+            display: none;
+}
+
+
+        /* Sub-Tabs (Activities) */
+        .sub-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .sub-tab {
+            cursor: pointer;
+            padding: 10px 20px;
+            font-weight: bold;
+            background-color: #FFC0CB;
+            border-radius: 5px;
+        }
+        .sub-tab:hover, .sub-tab.active {
+            background-color: #aaa;
+            color: white;
+        }
+
+        /* Sub-Content Sections */
+        .sub-content {
+            display: none;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+        }
+        .sub-content.active-sub-content {
+            display: block;
+        }
+
+        /* Image Styling */
+        .profile-img {
+            width: 400px;
+            height: 400px;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+        .back-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #ff6600; /* Button color */
+        color: white; /* Text color */
+        font-weight: bold; /* Bold text */
+        text-decoration: none; /* Remove underline */
+        border-radius: 5px; /* Rounded corners */
+        border: none; /* No border */
+        transition: background 0.3s ease;
+    }
+
+    .back-button:hover {
+        background-color: #cc5500; /* Darker color on hover */
+    }
+        /* Hide all content initially */
+.content {
+    display: none;
+}
+
+/* Show active content */
+.active-content {
+    display: block;
+}
+
+/* Hide sub-content initially */
+.sub-content {
+    display: none;
+}
+
+/* Show active sub-content */
+.active-sub-content {
+    display: block;
+}
+
+/* Highlight active tabs */
+.tab.active, .sub-tab.active {
+    font-weight: bold;
+}
+
+/* Ensure background-only mode */
+body:not(.content-active) .content {
+    display: none;
+}
+ .back-to-home {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background-color: #007bff; /* Blue color */
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background 0.3s ease;
+    }
+
+    .back-to-home:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
 
     </style>
 </head>
-
 <body>
-<div class="center-content">
-    <div class="text-box">
-    <h2><center><font color="orange">About Us </font></center></h2>
-        <p><font color="white">Welcome to PVP Government-Aided Polytechnic College.</font></p>
-        <p><font color="white">an institution operating under the Directorate of Technical Education (DTE).</font></p>
-        <p><font color="white">dedicated to providing high-quality diploma education in engineering and technology.</font></p>
+
+    <h1>About Us</h1>
+
+    <!-- Main Tabs -->
+    <div class="tabs">
+        <div class="tab active" onclick="showContent('founder', this)">Founder</div>
+        <div class="tab" onclick="showContent('management', this)">Management</div>
+        <div class="tab" onclick="showContent('principal', this)">Principal</div>
+        <div class="tab" onclick="showContent('activities', this)">Activities</div>
+    </div>
+
+    <!-- Founder Section -->
+    <div id="founder" class="content active-content">
+        <h2>Founder</h2>
+        <img src="{{ url_for('static', filename='images/founder.jpg') }}" alt="Founder" class="profile-img">
+        <p><b>Late Sri M.H. Jayaprakash Narayan</b></p>
+        <p><b>Founder – Managing Trustee</b></p>
+        <p>Panchajanya Vidyapeetha Welfare Trust (R)</p>
+        <p>Dr. Ambedkar Institute of Technology was established in the year 1980 by Late Sri. M.H. Jayaprakash Narayan, Ex-MLA and Founder Managing Trustee of PVP Welfare Trust and Secretary of the institute. Sri M.H. Jayaprakash Narayan, an Ex-Syndicate/Senate Member of Bangalore University, was a great visionary and an educationist. He was a strong follower of the principles of Bharatha Ratna Dr. B.R. Ambedkar. He came from a very humble Background and was a member of Legislative Assembly for several terms. He fought relentlessly for the upliftment of the downtrodden people. He believed that education is the main path for the emancipation of the oppressed classes and started a number of educational institutions to cater to all levels of education in Bengaluru.</p>
+    <a href="javascript:void(0);" class="back-button" onclick="goBackToAboutUs()">Back to About Us</a>
+    </div>
+
+    <!-- Management Section -->
+    <div id="management" class="content">
+        <h2>Management</h2>
+        <p>The TRUST has over 24 institutions with more than 10,000 students. As one of the fastest growing organization in the State of Karnataka, it has been offering quality education in every field of academics from Kindergarten to Post-Graduation and Research programs in science and technology at an affordable cost.
+            The students who have passed out of the institutions of PVPWT in the last three and half decades have excelled in their life, bringing laurels and glory to the nation. Eminent academicians, scholars, leaders, industrialists and others have showered accolades on its achievements and accomplishments.
+            The Trust comprises of eminent Trustees with diversified background, who serve relentlessly for the overall development of the organization. The organization is very proud to have these strong visionaries as Trustees.</p>
+
+         <img src="{{ url_for('static', filename='images/Mariswamy.jpg') }}" alt="Mariswamy" style="width: 400px; height: 400px; border-radius: 20px;">
+        <p><b>Sri. S. Mariswamy, IPS</b></p>
+        <p><b>The Honourable Chairman, PVP Welfare Trust,
+Former Director General of Police, Govt. of Karnataka, Bengaluru</b></p>
+
+        <img src="{{ url_for('static', filename='images/Shivamallu.jpg') }}" alt="Shivamallu" style="width: 400px; height: 400px; border-radius: 20px;">
+         <p><b>Sri S. Shivamallu, B.E., F.I.E</b></p>
+         <p><b>The Honourable Managing Trustee/Secretary, PVP Welfare Trust,
+Director : Transmission(Retd.) KPTCL, Govt. of Karnataka, Bengaluru</b></p>
+
+        <img src="{{ url_for('static', filename='images/Mahadeva.jpg') }}" alt="mahadeva" style="width: 400px; height: 400px; border-radius: 20px;">
+    <p><b>Dr. M. Mahadeva, Ph.D</b></p>
+    <p><b>The Honourable Treasurer, PVP Welfare Trust,
+        Former Professor, ISE Former Chairman I/C, KPSC, Government of Karnataka</b></p>
+
+        <img src="{{ url_for('static', filename='images/Krishnamurthy.jpg') }}" alt="krishnamurthy" style="width: 400px; height: 400px; border-radius: 20px;">
+        <p><b>Sri. A. R. Krishnamurthy, B.A., P.G. Diploma in Journalism</b></p>
+        <p><b>The Honourable Trustee, PVP Welfare Trust,
+MLA, Kollegal Constituency, Govt. of Karnataka Former Chairman, Dr.Ambedkar Development Corporation, Bengaluru</b></p>
+
+
+    <img src="{{ url_for('static', filename='images/Umesh.jpg') }}" alt="umesh" style="width: 400px; height: 400px; border-radius: 20px;">
+<p><b>Dr. B.N .Umesh, B.E., M.Tech., Ph.D(Comp.Sc)</b></p>
+<p><b>The Honourable Trustee, PVP Welfare Trust,
+Member-Academic Council(Govt. Nominee), Bangalore Central University</b></p>
+<a href="javascript:void(0);" class="back-button" onclick="goBackToAboutUs()">Back to About Us</a>
 
     </div>
- </div>
-</body>
 
+    <!-- Principal Section -->
+    <div id="principal" class="content">
+        <h2>Principal</h2>
+         <img src="{{ url_for('static', filename='images/principal1.jpg') }}" alt="principal1" style="width: 400px; height: 400px; border-radius: 20px;">
+        <p><b>M.N  Rajashekhara</b></p>
+        <p><b>Mtech.</b></p>
+        <p>Our college is dedicated to providing high-quality education and a holistic learning environment.</p>
+        <p>We aim to nurture students into responsible professionals and leaders.</p><br>
+        <p><b>Principal in a College </b></p>
+        <p>A college principal is the head of the institution, responsible for academic leadership, administration, and overall management. They ensure smooth functioning, maintain educational standards, and oversee faculty, students, and finances.</p>
+    <a href="javascript:void(0);" class="back-button" onclick="goBackToAboutUs()">Back to About Us</a>
+
+    </div>
+
+    <!-- Activities Section -->
+    <div id="activities" class="content">
+        <h1>Activity cells</h1>
+         <!-- Sub-Navigation for Activities -->
+        <nav class="sub-nav">
+            <div class="sub-tab active" onclick="showSubContent('placement', this)">Placement Cell</div>
+            <div class="sub-tab" onclick="showSubContent('nss', this)">NSS</div>
+            <div class="sub-tab" onclick="showSubContent('sports', this)">Sports</div>
+            <div class="sub-tab" onclick="showSubContent('antiragging', this)">Anti-Ragging Committee</div>
+            <div class="sub-tab" onclick="showSubContent('antiragging-squad', this)">Anti-Ragging Squad</div>
+            <div class="sub-tab" onclick="showSubContent('wsw-gr-cell', this)">WSW GR Cell</div>
+        </nav>
+
+        <!-- Sub-content Sections -->
+        <div id="placement" class="sub-content active-sub-content">
+            <h3>Placement Cell</h3>
+             <img src="{{ url_for('static', filename='images/placement.jpg') }}" alt="placement" style="width: 400px; height: 400px; border-radius: 20px;">
+            <p>The Placement Cell assists students in their career growth by organizing:</p>
+            <ul>
+                <li>On-campus recruitment drives</li>
+                <li>Resume-building workshops</li>
+                <li>Internship opportunities</li>
+                <li>Soft-skills training</li>
+            </ul>
+           <a href="javascript:void(0);" class="back-button" onclick="goBackToAboutUs()">Back to About Us</a>
+
+        </div>
+
+        <div id="nss" class="sub-content">
+            <h3>NSS (National Service Scheme)</h3>
+             <img src="{{ url_for('static', filename='images/nss.jpg') }}" alt="nss" style="width: 400px; height: 400px; border-radius: 20px;">
+            <p>The NSS program engages students in community service. Activities include:</p>
+            <ul>
+                <li>Tree plantation drives</li>
+                <li>Cleanliness campaigns</li>
+                <li>Blood donation camps</li>
+                <li>Helping underprivileged communities</li>
+            </ul>
+            <a href="javascript:void(0);" class="back-button" onclick="goBackToAboutUs()">Back to About Us</a>
+
+        </div>
+
+        <div id="sports" class="sub-content">
+            <h3>Sports</h3>
+             <img src="{{ url_for('static', filename='images/sport.jpg') }}" alt="sport" style="width: 400px; height: 400px; border-radius: 20px;">
+            <p>The institute promotes sports by organizing events and providing facilities for:</p>
+            <ul>
+                <li>Cricket, Football, and Basketball</li>
+                <li>Track and Field Athletics</li>
+                <li>Indoor Games: Chess, Table Tennis</li>
+                <li>Annual Sports Meet</li>
+            </ul>
+            <a href="javascript:void(0);" class="back-button" onclick="goBackToAboutUs()">Back to About Us</a>
+
+        </div>
+
+        <div id="antiragging" class="sub-content">
+            <h3>Anti-Ragging Committee</h3>
+             <img src="{{ url_for('static', filename='images/ragging.jpg') }}" alt="ragging" style="width: 400px; height: 400px; border-radius: 20px;">
+            <p>The institute has a strict anti-ragging policy to ensure a safe and supportive environment for students. The committee:</p>
+            <ul>
+                <li>Monitors and prevents any instances of ragging on campus</li>
+                <li>Provides support and counseling for students</li>
+                <li>Ensures strict disciplinary actions against offenders</li>
+                <li>Promotes awareness programs regarding anti-ragging policies</li>
+            </ul>
+            <a href="javascript:void(0);" class="back-button" onclick="goBackToAboutUs()">Back to About Us</a>
+
+        </div>
+
+        <div id="antiragging-squad" class="sub-content">
+            <h3>Anti-Ragging Squad</h3>
+             <img src="{{ url_for('static', filename='images/squard.jpg') }}" alt="squard" style="width: 400px; height: 400px; border-radius: 20px;">
+            <p>The Anti-Ragging Squad works alongside the Anti-Ragging Committee to ensure a safe and secure environment on campus. Their responsibilities include:</p>
+            <ul>
+                <li>Conducting surprise inspections in hostels, classrooms, and campus areas.</li>
+                <li>Monitoring and identifying any incidents of ragging.</li>
+                <li>Taking immediate action and reporting cases to the Anti-Ragging Committee.</li>
+                <li>Spreading awareness about the consequences of ragging through campaigns.</li>
+            </ul>
+            <a href="javascript:void(0);" class="back-button" onclick="goBackToAboutUs()">Back to About Us</a>
+
+        </div>
+
+        <!-- New WSW GR Cell Section -->
+        <div id="wsw-gr-cell" class="sub-content">
+            <h3>WSW GR Cell</h3>
+             <img src="{{ url_for('static', filename='images/wsw.jpg') }}" alt="wsw" style="width: 400px; height: 400px; border-radius: 20px;">
+            <p>The Women's Safety & Welfare Grievance Redressal Cell (WSW GR Cell) is dedicated to ensuring a safe and secure environment for female students. The cell:</p>
+            <ul>
+                <li>Handles complaints related to women's safety and grievances.</li>
+                <li>Organizes awareness programs on women's rights and self-defense.</li>
+                <li>Provides counseling and support for affected students.</li>
+                <li>Works in collaboration with security and administration for a safer campus.</li>
+            </ul>
+            <a href="javascript:void(0);" class="back-button" onclick="goBackToAboutUs()">Back to About Us</a>
+        </div>
+
+    </div>
+
+<script>
+    // Function to display main content when a main tab is clicked
+    function showContent(id, element) {
+        // Hide all main content sections
+        document.querySelectorAll('.content').forEach(el => el.classList.remove('active-content'));
+
+        // Show the selected content
+        document.getElementById(id).classList.add('active-content');
+
+        // Remove "active" class from all main tabs
+        document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+
+        // Add "active" class to the clicked tab
+        element.classList.add('active');
+
+        // Show the background only when no content is active
+        document.body.classList.add('content-active');
+    }
+
+    // Function to display sub-content when a sub-tab is clicked (for Activities section)
+    function showSubContent(id, element) {
+        // Hide all sub-content sections
+        document.querySelectorAll('.sub-content').forEach(el => el.classList.remove('active-sub-content'));
+
+        // Show the selected sub-content
+        document.getElementById(id).classList.add('active-sub-content');
+
+        // Remove "active" class from all sub-tabs
+        document.querySelectorAll('.sub-tab').forEach(el => el.classList.remove('active'));
+
+        // Add "active" class to the clicked sub-tab
+        element.classList.add('active');
+    }
+
+    // Function to go back to the main "About Us" page (hide all content)
+    function goBackToAboutUs() {
+        // Hide all main content sections
+        document.querySelectorAll('.content').forEach(el => el.classList.remove('active-content'));
+
+        // Hide all sub-content sections
+        document.querySelectorAll('.sub-content').forEach(el => el.classList.remove('active-sub-content'));
+
+        // Remove active class from all main tabs and sub-tabs
+        document.querySelectorAll('.tab, .sub-tab').forEach(el => el.classList.remove('active'));
+
+        // Remove content-active class to show only background
+        document.body.classList.remove('content-active');
+    }
+
+
+
+    // Ensure the first tab and first sub-tab are active by default when the page loads
+    document.addEventListener("DOMContentLoaded", function() {
+        let firstTab = document.querySelector('.tab');
+        let firstContent = document.querySelector('.content');
+
+        if (firstTab && firstContent) {
+            firstTab.classList.add('active');
+            firstContent.classList.add('active-content');
+        }
+
+        // If there is a sub-navigation (for Activities), activate the first sub-tab
+        let subNav = document.querySelector('.sub-nav');
+        if (subNav) {
+            let firstSubTab = document.querySelector('.sub-tab');
+            let firstSubContent = document.querySelector('.sub-content');
+
+            if (firstSubTab && firstSubContent) {
+                firstSubTab.classList.add('active');
+                firstSubContent.classList.add('active-sub-content');
+            }
+        }
+    });
+</script>
+ <!-- ✅ Back to Home Button -->
+<a href="{{ url_for('home') }}" class="back-to-home">Back to Home</a>
+
+
+</body>
 </html>
+
