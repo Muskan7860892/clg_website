@@ -1,0 +1,45 @@
+{% extends "branches.html" %}
+{% block content %}
+<h2>Manage Branch Images</h2>
+
+<!-- Upload Form -->
+<form action="{{ url_for('upload_image') }}" method="POST" enctype="multipart/form-data">
+    <label for="branch_code">Select Branch:</label>
+    <select id="branch_code" name="branch_code" required>
+        <option value="">--Select Branch--</option>
+        {% for branch in branches %}
+        <option value="{{ branch.branch_code }}">{{ branch.branch_name }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label for="image">Upload Image:</label> <input type="file" id="image" name="image" accept="image/*" required>
+
+    <button type="submit">Upload</button>
+</form>
+
+<!-- Display Uploaded Images -->
+<h3>Uploaded Images</h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Branch</th>
+        <th>Image</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for image in images %}
+    <tr>
+        <td>{{ image.branch_code }}</td>
+        <td><img src="{{ image.image_url }}" alt="Branch Image" width="100"></td>
+        <td>
+            <form action="{{ url_for('delete_image', image_id=image.id) }}" method="POST">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Branch Names</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            width: 500px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .branch-list {
+            list-style: none;
+            padding: 0;
+        }
+        .branch-item {
+            margin: 10px 0;
+        }
+        .branch-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .branch-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Branches</h2>
+    <ul class="branch-list">
+        {% for branch in branches %}
+        <li class="branch-item">
+            <a href="{{ url_for('branch_details', branch_code=branch.branch_code) }}">
+            <button class="branch-button">{{ branch.branch_name }}</button>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>

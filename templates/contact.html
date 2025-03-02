@@ -54,21 +54,37 @@
             color: black;
             text-decoration:underline;
          }
-         /* ✅ Contact Section */
-.contact-info p {
-    margin: 8px 0;
-}
+        .contact-info p {
+            margin: 8px 0;
+        }
 
-.contact-info a {
-    color: white;
-    text-decoration: none;
-}
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+        }
         .text-box {
         background: rgba(0,0, 0, 0.4); /* Semi-transparent black */
         color: white;  /* Text color */
         padding: 15px; /* Space inside the box */
         border-radius: 5px; /* Rounded corners */
         display: inline-block;
+        }
+        @media screen and (max-width: 600px) {
+            body {
+                font-size: 16px; /* Reduce font size */
+                padding: 10px;
+                display: block; /* Prevent flex issues */
+            }
+
+            .contact-details {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .text-box {
+                width: 95%;
+                font-size: 14px;
+            }
         }
 
     </style>

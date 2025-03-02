@@ -1,0 +1,9 @@
+{% extends "branches.html" %}
+{% block content %}
+<h2>Add Branch</h2>
+<form method="POST" action="/add_branch">
+    <label>Branch Name:</label><input type="text" name="branch_name" required><br>
+    <label>Branch Code:</label><input type="text" name="branch_code" required><br>
+    <button type="submit">Add Branch</button>
+</form>
+{% endblock %}

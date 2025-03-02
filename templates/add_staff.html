@@ -1,0 +1,23 @@
+{% extends "staff.html" %}
+{% block content %}
+<h2>Add Staff</h2>
+<form method="POST" action="/add_staff" enctype="multipart/form-data">
+  <label>Name:</label><input type="text" name="staff_name" required><br>
+  <label>Staff ID:</label><input type="text" name="staff_id" required><br>
+  <label>Designation:</label><input type="text" name="designation" required><br>
+  <label>Department:</label><input type="text" name="department" required><br>
+  <label>Contact:</label><input type="text" name="contact" required><br>
+  <label>Qualification:</label><input type="text" name="qualification" required><br>
+  <label for="branch_code">Select Branch Code:</label>
+  <select id="branch_code" name="branch_code" required>
+    <option value="">--Select Branch code--</option>
+    {% for branch in branches %}
+    <option value="{{ branch.branch_code }}">{{ branch.branch_code }}</option>
+    {% endfor %}
+  </select><br>
+  <br>
+  <label for="image">Upload Image:</label>
+  <input type="file" id="image" name="image">
+  <button type="submit">Add Staff</button>
+</form>
+{% endblock %}

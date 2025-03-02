@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Notification</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { width: 50%; margin: auto; }
+        input, button { padding: 10px; margin: 5px 0; display: block; width: 100%; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Edit Notification</h2>
+    <a href="/notification/manage">Back to Manage Notifications</a><br><br>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="message" value="{{ notification.message }}" required>
+
+        <label>Upload PDF (Optional):</label>
+        <input type="file" name="pdf_file" accept="application/pdf">
+
+        <button type="submit">Update Notification</button>
+    </form>
+</div>
+
+</body>
+</html>

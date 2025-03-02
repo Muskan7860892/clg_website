@@ -1,0 +1,21 @@
+{% extends "management.html" %}
+{% block content %}
+<h2>Edit Management Member</h2>
+<form action="" method="POST" enctype="multipart/form-data">
+  <label>Name:</label>
+  <input type="text" name="name" value="{{ entry.name }}" required>
+
+  <label>Position:</label>
+  <input type="text" name="position" value="{{ entry.position }}" required>
+
+  <label>Description:</label>
+  <textarea name="description" required>{{ entry.description }}</textarea>
+
+  <label>Image:</label>
+  <input type="file" name="image">
+  <img src="{{ url_for('static', filename='management/' + entry.image) }}" width="100">
+
+  <button type="submit">Update</button>
+</form>
+
+{% endblock %}

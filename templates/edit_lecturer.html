@@ -1,0 +1,44 @@
+{% extends "lecturer.html" %}
+{% block content %}
+<h2>Edit Lecturer</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ lecturer.name }}" required>
+
+    <label>Staff ID:</label>
+    <input type="text" name="staff_id" value="{{ lecturer.staff_id }}" required>
+
+    <label>Designation:</label>
+    <input type="text" name="designation" value="{{ lecturer.designation }}" required>
+
+    <label>Department:</label>
+    <input type="text" name="department" value="{{ lecturer.department }}" required>
+
+    <label>Contact:</label>
+    <input type="text" name="contact" value="{{ lecturer.contact }}" required>
+
+    <label for="branch_code">Select Branch Code:</label>
+    <select id="branch_code" name="branch_code"  required>
+        <option value="{{ lecturer.branch_code }}">--Select Branch code--</option>
+        {% for branch in branches %}
+        <option value="{{ branch.branch_code }}">{{ branch.branch_code }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label>Qualification:</label>
+    <input type="text" name="qualification" value="{{ lecturer.qualification }}" required>
+
+    <label>Current Image:</label>
+    {% if lecturer.image %}
+        <img src="{{ url_for('static', filename='lecturer_images/' + lecturer.image) }}" alt="Lecturer Image" width="50"><br>
+    {% else %}
+        No Image Uploaded<br>
+    {% endif %}
+
+    <label>Changed image:</label>
+    <input type="file" name="image" accept="image/*"><br>
+
+    <button type="submit">Update Lecturer</button>
+</form>
+{% endblock %}

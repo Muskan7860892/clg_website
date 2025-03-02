@@ -1,0 +1,19 @@
+{% extends "principal.html" %}
+{% block content %}
+<h2>Add Principal</h2>
+<form action="" method="POST" enctype="multipart/form-data">
+  <label>Name:</label>
+  <input type="text" name="name" required>
+
+  <label>Qualification:</label>
+  <input type="text" name="qualification" required>
+
+  <label>Description:</label>
+  <textarea name="description" required></textarea><br>
+
+  <label>Image:</label>
+  <input type="file" name="image" required>
+
+  <button type="submit">Add</button>
+</form>
+{% endblock %}

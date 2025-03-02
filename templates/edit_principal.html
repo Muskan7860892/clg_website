@@ -1,0 +1,20 @@
+{% extends "principal.html" %}
+{% block content %}
+<h2>Edit Principal</h2>
+<form action="" method="POST" enctype="multipart/form-data">
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ principal.name }}" required>
+
+    <label>Qualification:</label>
+    <input type="text" name="qualification" value="{{ principal.qualification }}" required>
+
+    <label>Description:</label>
+    <textarea name="description" required>{{ principal.description }}</textarea><br>
+
+    <label>Image:</label>
+    <input type="file" name="image">
+    <img src="{{ url_for('static', filename='management/' + principal.image) }}" width="100">
+
+    <button type="submit">Update</button>
+</form>
+{% endblock %}

@@ -6,10 +6,10 @@
 
     <title>PVP POLYTECHNIC</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}">
     <style>
     body {
-      font-family: Algerian, sans-serif;
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       height: 100vh;
@@ -17,16 +17,15 @@
       justify-content: center;
       align-items: center;
     }
-
     .chatbot-icon {
       position: fixed;
-      bottom: 60px;
-      right: 20px;
+      bottom: 100px;
+      right: 60px;
       background-color: #ADDFFF;
       color: black;
       border-radius: 10%;
-      width: 100px;
-      height: 40px;
+      width: 90px;
+      height: 50px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -45,7 +44,8 @@
       position: fixed;
       bottom: 90px;
       right: 20px;
-      width: 300px;
+      width: 90%;
+      max-width: 300px;
       height: 400px;
       background-color: white;
       border: 1px solid #ddd;
@@ -80,33 +80,87 @@
       font-size: 16px;
       cursor: pointer;
     }
-    .notification-bar{
-        background-color:#0000ff;
-        color:red;
-        padding:10px;
-        font-size:2.5rem;
-        overflow:hidden;
-        white-space:nowrap;
-        text-align:center;
-        }
+
     .marquee{
         font-weight:bold;
+    }
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 1rem;  /* ✅ Adjusted font for smaller screens */
         }
+        .logo {
+            max-width: 100px;  /* ✅ Scaled logo for mobile */
+        }
+        .chatbot-window {
+            width: 90%;/* ✅ Chatbot fits mobile screen */
+            top:90px;
+            left: 100px:
+        }
+        nav ul {
+            flex-direction: column;  /* ✅ Stacks menu items vertically */
+        }
+        nav ul li {
+            text-align: center;
+        }
+        .notification-box {
+            width: 40%; /* Make it responsive */
+            left: 5%;
+            bottom: 10px;
+        }
+        .chatbot-icon {
+            top: 30px;
+        }
+        #background-slider {
+            height: 100%;  /* ✅ Smaller background image for mobile */
+        }
+    }
+    .notification-box {
+        position: absolute;
+        bottom: 50px; /* Moved slightly up */
+        left: 20px; /* Positioned on the left */
+        width: 350px;
+        height: 100px;
+        background: #ADDFFF;
+        color: black;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        cursor: grab;
+        user-select: none;
+        z-index: 1000;
+    }
 
+    .notification-header {
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: grab;
+    }
 
-  </style>
+    .notification-content {
+        height: 70px;
+        overflow-y: auto;
+        font-size: 14px;
+    }
+
+    .download-link {
+        color: red;
+        text-decoration: underline;
+        display: block;
+        margin-top: 5px;
+    }
+    </style>
 </head>
 <body>
 <div class="background"></div>
 
 <div id="background-slider"></div>
 
-
 <script>
     const images = [
         "/static/images/background1.jpg",
         "/static/images/background5.jpg",
-        "/static/images/background8.jpg"
          "/static/images/background6.jpg"
     ];
 
@@ -128,14 +182,12 @@
 
 
     <header>
-
-
             <h1><font color="red"><font size="80">PVP POLYTECHNIC</font></font></h1>
 
         <!-- View Counter inside a <span> tag -->
 <p class="view-counter">Total Views: <span>{{ views }}</span></p>
-        <img src="{{ url_for('static', filename='images/logo1.jpg') }}" alt="PVP Polytechnic Logo" class="logo"><br><br>
-        <div id="notification-bar"><marquee diretion="left"><font color="01F9C6"> All the diploma courses are available in this pvp college</font></marquee></div><br><br>
+        <img src="{{ url_for('static', filename='images/logo1.jpg') }}" alt="PVP Polytechnic Logo" class="logo"><br>
+        <div id="notification-bar"><marquee diretion="left"><font color="01F9C6"> All the diploma courses are available in this pvp college</font></marquee></div><br>
 
         <nav>
             <ul>
@@ -144,11 +196,9 @@
                 <li><a href="{{ url_for('contact') }}" >Contact</a></li>
                 <li><a href="{{ url_for('gallery') }}" >Gallery</a></li>
                 <li><a href="{{ url_for('admission') }}">Admission Process</a></li>
-                <li><a href="{ url_for('courses') }}" >Courses</a></li>
-                <li><a href="{ url_for('admin portal') }}" >Admin portal</a></li>
-
-       </ul>
-
+                <li><a href="/branch_names" >Branches</a></li>
+                <li><a href="/admin" >Admin portal</a></li>
+            </ul>
         </nav>
     </header>
     <main>
@@ -167,8 +217,84 @@
       <p>Hello! How can I assist you today?</p>
     </div>
   </div>
+<div class="notification-box" id="notificationBox">
+    <div class="notification-header">
+        🔔 Notifications
+        <button class="close-btn" onclick="closeNotification()">✖</button>
+    </div>
+    <div class="notification-content">
+        {% if notifications %}
+        {% for notification in notifications %}
+        <p>📢 {{ notification.message }}</p>
+        {% if notification.pdf_filename %}
+        <a class="download-link" href="{{ url_for('download_pdf', filename=notification.pdf_filename) }}">📂 View PDF</a>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <p>No notifications yet.</p>
+        {% endif %}
+    </div>
+</div>
 
   <script>
+    const notification = document.getElementById("notificationBox");
+    const header = document.querySelector(".notification-header");
+
+    let isDragging = false, offsetX = 0, offsetY = 0;
+
+    // Start dragging on mouse down
+    header.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        offsetX = e.clientX - notification.offsetLeft;
+        offsetY = e.clientY - notification.offsetTop;
+        document.addEventListener("mousemove", moveElement);
+        document.addEventListener("mouseup", stopDrag);
+    });
+
+    // Move notification while dragging
+    function moveElement(e) {
+        if (!isDragging) return;
+        let x = e.clientX - offsetX;
+        let y = e.clientY - offsetY;
+        notification.style.left = `${x}px`;
+        notification.style.top = `${y}px`;
+    }
+
+    // Stop dragging on mouse up
+    function stopDrag() {
+        isDragging = false;
+        document.removeEventListener("mousemove", moveElement);
+        document.removeEventListener("mouseup", stopDrag);
+    }
+
+    // Enable mobile touch dragging
+    header.addEventListener("touchstart", (e) => {
+        isDragging = true;
+        offsetX = e.touches[0].clientX - notification.offsetLeft;
+        offsetY = e.touches[0].clientY - notification.offsetTop;
+        document.addEventListener("touchmove", moveElementTouch);
+        document.addEventListener("touchend", stopDragTouch);
+    });
+
+    function moveElementTouch(e) {
+        if (!isDragging) return;
+        let x = e.touches[0].clientX - offsetX;
+        let y = e.touches[0].clientY - offsetY;
+        notification.style.left = `${x}px`;
+        notification.style.top = `${y}px`;
+    }
+
+    function stopDragTouch() {
+        isDragging = false;
+        document.removeEventListener("touchmove", moveElementTouch);
+        document.removeEventListener("touchend", stopDragTouch);
+    }
+
+    // Close notification function
+    function closeNotification() {
+        notification.style.display = "none";
+    }
+
     function toggleChatbot() {
       const chatbot = document.getElementById('chatbot');
       if (chatbot.style.display === 'block') {

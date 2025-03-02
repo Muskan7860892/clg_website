@@ -1,0 +1,33 @@
+{% extends "branches.html" %}
+{% block content %}
+<h2>View Branches</h2>
+
+<form method="GET" action="{{ url_for('branch') }}">
+  <input type="text" name="query" placeholder="Search branches..." value="{{ request.args.get('query', '') }}">
+  <button type="submit">Search</button>
+</form>
+
+<table>
+  <thead>
+  <tr>
+    <th>Branch Name</th>
+    <th>Branch Code</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for branch in branches %}
+  <tr>
+    <td>
+      <a href="{{ url_for('branch_details', branch_code=branch.branch_code) }}">{{ branch.branch_name }}</a>
+    </td>
+    <td>{{ branch.branch_code }}</td>
+    <td>
+      <a href="{{ url_for('edit_branch', id=branch.id) }}">Edit</a>
+      <a href="{{ url_for('delete_branch', id=branch.id) }}">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

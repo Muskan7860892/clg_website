@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Management System</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: green;
+          height: 100vh;
+          transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar {
+          width: 250px;
+          height: 100vh;
+          background-color: silver;
+          color: white;
+          position: fixed;
+          top: 0;
+          left: -250px;
+          padding: 20px;
+          transition: 0.3s;
+          overflow-y: auto;
+          z-index: 1000;
+        }
+        .sidebar.active {
+          left: 0;
+        }
+        .menu-toggle {
+          position: fixed;
+          top: 15px;
+          left: 15px;
+          font-size: 24px;
+          cursor: pointer;
+          background: none;
+          border: none;
+          color: #2c3e50;
+          z-index: 1001;
+          transition: left 0.3s ease-in-out, color 0.3s;
+        }
+        .sidebar.active .menu-toggle {
+          left: 220px; /* Moves inside the sidebar */
+          color: white;
+        }
+        .sidebar.active + .main {
+            margin-left: 250px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        .sidebar button {
+          display: block;
+          width: 100%;
+          padding: 10px;
+          margin: 10px 0;
+          background: #9b9da0;
+          color: white;
+          border: none;
+          text-align: left;
+          cursor: pointer;
+          font-size: 16px;
+          border-radius: 10px;
+        }
+
+        .sidebar button:hover {
+          background-color: #868789;
+        }
+        .main {
+          margin-left: 20px;
+          padding: 20px;
+          transition: 0.3s;
+        }
+        .header {
+          font-size: 24px;
+          font-weight: bold;
+          margin-bottom: 20px;
+        }
+        .cards {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+        }
+        .card {
+          flex: 1;
+          padding: 20px;
+          background-color: white;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          text-align: center;
+        }
+        .card h3 {
+          margin: 10px 0;
+        }
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .chart-box {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        img {
+            max-width: 100%;
+        }
+        h1 {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.8em;
+            color: #fff;
+            font-weight: bold;
+        }
+        .menu-toggle.active {
+            left: 220px;
+        }
+        button {
+        background-color: var(--button-bg);
+        color: var(--text-color);
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        }
+        .cards {
+            flex-direction: column;
+        }
+
+        .card {
+            width: 100%;
+        }
+        /* Hide the dropdown content initially */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px;
+        }
+
+        /* Style for dropdown buttons */
+        .dropdown-content a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<div class="menu-toggle" id="menuToggle">
+    <i class="fas fa-bars"></i>
+</div>
+
+<div class="sidebar" id="sidebar">
+    <h2>Admin Panel</h2>
+    <nav>
+        <button onclick="location.href='/notification/manage'">Manage Notification</button>
+        <button onclick="location.href='/branch'">Branches</button>
+        <button onclick="location.href='/staff'">Manage Staff</button>
+        <button onclick="location.href='/hods'">Manage HOD's</button>
+        <button onclick="location.href='/manage_branch_images'">Manage Images</button>
+        <button onclick="location.href='/lecturers'">Manage Lecturers</button>
+        <div class="dropdown">
+            <button onclick="toggleDropdown()">Manage Cells  ▼</button>
+            <div class="dropdown-content" id="cellDropdown">
+                <a href="{{ url_for('view_cell_members', cell_name='Placement') }}">Placement Cell</a>
+                <a href="{{ url_for('view_cell_members', cell_name='NSS') }}">NSS Cell</a>
+                <a href="{{ url_for('view_cell_members', cell_name='Sports') }}">Sports Cell</a>
+                <a href="{{ url_for('view_cell_members', cell_name='Anti-Ragging Committee') }}">Anti-Ragging Committee</a>
+                <a href="{{ url_for('view_cell_members', cell_name='Anti-Ragging Squad') }}">Anti-Ragging Squad</a>
+                <a href="{{ url_for('view_cell_members', cell_name='WSW GR Cell') }}">WSW GR Cell</a>
+            </div>
+        </div>
+        <button onclick="location.href='/admin/management'">Manage Management Members</button>
+        <button onclick="location.href='/admin/principal'">Manage Principal Info</button>
+        <button id="securityBtn">Security Changes ▼</button>
+        <div id="securityOptions" style="display: none; padding-left: 10px;">
+            <button onclick="location.href='/change_password'">Password Change</button>
+        </div>
+        <button onclick="location.href='/logout'" class="logout-link" style="color: red;">
+            <i class="fas fa-sign-out-alt"></i>Logout
+        </button>
+    </nav>
+</div>
+<div class="main">
+    <div class="header">
+        <b><h6><marquee><font color="red">**Don't share User_name and Password**</font></marquee></h6></b>
+        <h1 class="text-center mb-4"><u>Admin Dashboard</u></h1>
+        <div class="container mt-5">
+
+            <div class="row">
+                <!-- Total Students -->
+                <div class="col-md-4 mb-3">
+                    <a href="/staff" class="text-decoration-none">
+                        <div class="card text-white bg-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Technical Staff</h5>
+                                <h2>{{ total_staff }}</h2>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- Total Branches -->
+                <div class="col-md-4 mb-3">
+                    <a href="/branch" class="text-decoration-none">
+                        <div class="card text-white bg-info">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Branches</h5>
+                                <h2>{{ total_branches }}</h2>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <a href="/lecturers" class="text-decoration-none">
+                        <div class="card text-white bg-primary">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Lecturers</h5>
+                                <h2>{{ total_lecturers }}</h2>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <center><div class="col-md-4 mb-3">
+                    <a href="/hods" class="text-decoration-none">
+                        <div class="card text-white bg-secondary">
+                            <div class="card-body">
+                                <h5 class="card-title">Total HODs</h5>
+                                <h2>{{ total_hods }}</h2>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                </center>
+            </div>
+        </div>
+        <br>
+    </div>
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        menuToggle.addEventListener('click', function () {
+          sidebar.classList.toggle('active');
+          menuToggle.classList.toggle('active');
+        });
+
+        document.getElementById("securityBtn").addEventListener("click", function () {
+            var securityOptions = document.getElementById("securityOptions");
+            securityOptions.style.display = securityOptions.style.display === "none" ? "block" : "none";
+        });
+
+        function toggleDropdown() {
+            var dropdown = document.getElementById("cellDropdown");
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+
+        function viewCellMembers(cellName) {
+            // Redirect to the Flask route dynamically
+            window.location.href = `/view_cell_members/${cellName}`;
+        }
+
+        // Hide dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown button')) {
+                document.getElementById("cellDropdown").style.display = "none";
+            }
+        }
+
+
+    </script>
+    <main>
+        <h2>Branch Staff Distribution</h2>
+        <div class="chart-container">
+            {% for branch_code, image in chart_images.items() %}
+            <div class="chart-box">
+                <h3>{{ branches|selectattr("branch_code", "equalto", branch_code)|map(attribute="branch_name")|first }}</h3>
+                <img src="data:image/png;base64,{{ image }}" alt="Pie Chart for {{ branch_code }}">
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</div>
+</body>
+</html>

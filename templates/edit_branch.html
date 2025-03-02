@@ -1,0 +1,13 @@
+{% extends "branches.html" %}
+{% block content %}
+<h2>Edit Branch</h2>
+<form method="POST" action="{{ url_for('edit_branch', id=branch.id) }}">
+  <label for="branch_name">Branch Name:</label>
+  <input type="text" id="branch_name" name="branch_name" value="{{ branch.branch_name }}" required>
+
+  <label for="branch_code">Branch Code:</label>
+  <input type="text" id="branch_code" name="branch_code" value="{{ branch.branch_code }}" required>
+
+  <button type="submit">Save Changes</button>
+</form>
+{% endblock %}

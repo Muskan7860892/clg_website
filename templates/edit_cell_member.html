@@ -1,0 +1,15 @@
+{% extends "cell_members.html" %}
+{% block content %}
+<h2>Edit Member</h2>
+<form action="" method="POST" enctype="multipart/form-data">
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ member.name }}" required>
+
+    <label>Image:</label>
+    <input type="file" name="image">
+    <img src="{{ url_for('static', filename='management/' + member.image) }}" width="100">
+
+    <button type="submit">Update</button>
+</form>
+<a href="{{ url_for('view_cell_members', cell_name=member.cell) }}">Back</a>
+{% endblock %}

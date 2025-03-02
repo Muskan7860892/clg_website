@@ -1,0 +1,329 @@
+/* General Body and Layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('/static/images/background1.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit; /* Use the same background */
+    filter: blur(3px); /* Adjust the blur effect */
+    z-index: -1; /* Keep it behind content */
+}
+
+
+/* Header Styling */
+header {
+    background: rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 100px;
+    color: #fff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    margin: 20;
+}
+
+/* Logo Styling */
+header.logo {
+    width: 100px;
+    height: 100px;
+}
+
+/* Navigation Styling */
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centers the items horizontally */
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: black;
+    text-decoration: none;
+    padding: 10px 20px;
+
+    background: #FFC0CB;
+}
+
+nav ul li a:hover {
+    background: #ffcc00;
+    color: #000;
+}
+
+/* Main Content Styling */
+main {
+    padding: 100px;
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+
+}
+img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .contact-details {
+            margin-top: 20px;
+            text-align: left;
+    }
+/* Footer Styling */
+footer {
+    background: rgba(0, 0, 0, 0.4);
+    text-align: center;
+    padding: 2px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    color: #fff;
+}
+.marquee{
+        font-weight:bold;
+        }
+.center-content {
+    text-align: center; /* Center-align the text */
+}
+
+.center-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.center-content p {
+    font-size: 1.2rem;
+    color:#666;
+}
+h2 {
+    color: orange;
+    font-size: 35px;
+    margin-top: 60px;
+    text-shadow: 2px 2px 4px white;
+}
+
+/* View Counter Positioned in Top-Left Corner */
+.view-counter {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    color: red;
+    padding: 8px 15px;
+    border-radius: 8px;
+}
+
+.view-counter span {
+    font-size: 24px;
+    color: yellow;
+    font-weight: bold;
+}
+
+.nav {
+    margin-top: 20px;
+}
+
+.nav a {
+    text-decoration: none;
+    font-size: 22px;
+    color: white;
+    margin: 0 15px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.admission-process {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding: 10px;
+    border: 1px solid #ddd; /* Optional: Adds a border */
+    background: #f9f9f9; /* Optional: Light background */
+    border-radius: 5px;
+}
+@keyframes slideBackground {
+    0%   { background-image: url('/static/images/background1.jpg'); opacity: 1; }
+    14%  { background-image: url('/static/images/background2.jpg'); opacity: 1; }
+    28%  { background-image: url('/static/images/background5.jpg'); opacity: 1; }
+    42%  { background-image: url('/static/images/background6.jpg'); opacity: 1; }
+    57%  { background-image: url('/static/images/background7.jpg'); opacity: 1; }
+    71%  { background-image: url('/static/images/background1.jpg'); opacity: 1; }
+    85%  { background-image: url('/static/images/background2.jpg'); opacity: 1; }
+    100% { background-image: url('/static/images/background5.jpg'); opacity: 1; }
+}
+@keyframes fadeEffect {
+    from { opacity: 0; transform: scale(5s); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+
+
+.fade-in {
+    animation: fadeEffect 5s ease-in-out;
+}
+#background-slider {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 1s ease-in-out;
+    animation: slideBackground 30s infinite;
+    z-index: -1;
+}
+
+/* Optional: Fade Effect */
+.fade-in {
+    animation: fadeEffect 1s ease-in-out;
+}
+
+@keyframes fadeEffect {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+@keyframes slowFadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply slow animation to title and paragraphs */
+h1, h2, h3, p {
+    animation: slowFadeSlide 2s ease-out; /* Slower animation */
+}
+@keyframes navFadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply animation to navigation menu */
+nav ul li {
+    animation: navFadeSlide 2s ease-out;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+/* Delay each menu item for a cascading effect */
+nav ul li:nth-child(1) { animation-delay: 0.2s; }
+nav ul li:nth-child(2) { animation-delay: 0.4s; }
+nav ul li:nth-child(3) { animation-delay: 0.6s; }
+nav ul li:nth-child(4) { animation-delay: 0.8s; }
+nav ul li:nth-child(5) { animation-delay: 1s; }
+nav ul li:nth-child(6) { animation-delay: 1.2s; }
+nav ul li:nth-child(7) { animation-delay: 1.4s; }
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+        padding: 0;
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav ul li {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    nav ul li a {
+        width: 90%;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    main {
+        padding: 20px;
+        font-size: 10px;
+    }
+
+    img {
+        width: 100px;
+        height: 100px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-top: 15px;
+    }
+
+    .view-counter {
+        font-size: 10px;
+        top: 5px;
+        left: 5px;
+        padding: 4px 8px;
+    }
+
+    .admission-process {
+        max-height: 20px;
+        font-size: 1px;
+        padding: 5px;
+    }
+
+    footer {
+        padding: 3px;
+        font-size: 12px;
+    }
+}

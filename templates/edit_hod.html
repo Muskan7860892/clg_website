@@ -1,0 +1,38 @@
+{% extends "hod.html" %}
+{% block content %}
+<h2>Edit HOD</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <label>Name:</label>
+    <input type="text" name="hod_name" value="{{ hod.hod_name }}" required>
+
+    <label for="branch_code">Select Branch Code:</label>
+    <select id="branch_code" name="branch_code"  required>
+        <option value="{{ hod.branch_code }}">--Select Branch code--</option>
+        {% for branch in branches %}
+        <option value="{{ branch.branch_code }}">{{ branch.branch_code }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label>Department:</label>
+    <input type="text" name="department" value="{{ hod.department }}" required>
+
+    <label>Contact:</label>
+    <input type="text" name="contact" value="{{ hod.contact }}" required>
+
+    <label>Qualification:</label>
+    <input type="text" name="qualification" value="{{ hod.qualification }}" required>
+
+    <label>Current Image:</label>
+    {% if hod.image_url %}
+    <img src="{{ hod.image_url }}" alt="HOD Image" width="100" height="100">
+    {% endif %}
+
+    <label for="image">Change Image:</label>
+    <input type="file" id="image" name="image" accept="image/*">
+
+    <button type="submit">Update HOD</button>
+</form>
+
+<a href="{{ url_for('view_hods') }}">Back to HOD List</a>
+{% endblock %}

@@ -73,6 +73,36 @@
         .gallery img:hover {
             transform: scale(1.05);
         }
+
+        @media screen and (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+
+            /* Sidebar remains on the left but shrinks */
+            .nav {
+                width: 160px; /* Smaller sidebar for mobile */
+            }
+
+            .nav a {
+                width: 140px;
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            /* Adjust content space */
+            .content {
+                margin-left: 170px; /* Adjust to match smaller sidebar */
+                width: calc(100% - 170px);
+                padding: 15px;
+            }
+
+            /* Make images smaller on mobile */
+            .gallery img {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
     </style>
 </head>
 

@@ -1,0 +1,63 @@
+{% extends "principal.html" %}
+{% block content %}
+<h2>View Principal</h2>
+{% if principal %}
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Qualification</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Actions</th>
+    </tr>
+    <tr>
+        <td>{{ principal.name }}</td>
+        <td>{{ principal.qualification }}</td>
+        <td>{{ principal.description }}</td>
+        <td>
+            <img src="{{ url_for('static', filename='management/' + principal.image) }}" width="100">
+        </td>
+        <td>
+            <a href="{{ url_for('edit_principal', id=principal.id) }}">
+                <button type="button" class="edit-btn">Edit</button>
+            </a>
+            <a href="{{ url_for('delete_principal', id=principal.id) }}">
+                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure?')">Delete</button>
+            </a>
+        </td>
+    </tr>
+</table>
+{% else %}
+<p>No Principal information available.</p>
+{% endif %}
+
+
+<!-- CSS Styling -->
+<style>
+    .edit-btn {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .edit-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .delete-btn:hover {
+        background-color: #a71d2a;
+    }
+</style>
+{% endblock %}
