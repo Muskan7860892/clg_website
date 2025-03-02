@@ -38,10 +38,28 @@ os.makedirs(app.config['UPLOAD_FOLDER_6'], exist_ok=True)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
+VIEW_COUNT_FILE = "views.txt"
+
+def get_views():
+    """Read the current view count from the file."""
+    try:
+        with open(VIEW_COUNT_FILE, "r") as file:
+            return int(file.read().strip())
+    except (FileNotFoundError, ValueError):
+        return 0  # If file not found or empty, start with 0 views.
+
+def update_views():
+    """Increase the view count and save it back to the file."""
+    views = get_views() + 1
+    with open(VIEW_COUNT_FILE, "w") as file:
+        file.write(str(views))
+    return views
+
 @app.route("/")
 def home():
+    views = update_views()
     notifications = Notification.query.order_by(Notification.id.desc()).all()
-    return render_template("base.html", notifications=notifications)
+    return render_template("base.html", notifications=notifications, views=views)
 
 @app.route("/about")
 def about():

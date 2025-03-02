@@ -230,7 +230,7 @@ body {
             The Trust comprises of eminent Trustees with diversified background, who serve relentlessly for the overall development of the organization. The organization is very proud to have these strong visionaries as Trustees.</p>
 
         {% for member in management %}
-            <img src="{{ url_for('static', filename='images/' + member.image) }}" alt="{{ member.name }}" width="200" height="200" style="border-radius: 20px;">
+            <img src="{{ url_for('static', filename='management/' + member.image) }}" alt="{{ member.name }}" width="200" height="200" style="border-radius: 20px;">
             <p><b>{{ member.name }}</b></p>
             <p><b>{{ member.position }}</b></p>
             <p>{{ member.description }}</p>
