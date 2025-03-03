@@ -205,6 +205,7 @@ def change_password():
 @app.route("/dashboard")
 @login_required
 def dashboard():
+    views = update_views()
     branches = Branch.query.all()
     chart_images = {}
 
@@ -254,6 +255,7 @@ def dashboard():
         total_lecturers=total_lecturers,
         total_hods=total_hods,
         chart_images=chart_images,
+        views=views,
         branches=branches
     )
 
