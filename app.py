@@ -178,7 +178,7 @@ def login():
             login_user(user)
             return redirect(url_for('dashboard'))
         else:
-            flash('Invalid usernme or password', 'danger')
+            flash('Invalid username or password', 'danger')
 
     return render_template('login.html')
 
@@ -384,6 +384,7 @@ def staff():
 @app.route("/add_staff", methods=["GET", "POST"])
 @login_required
 def add_staff():
+
     if request.method == "POST":
         staff_name = request.form["staff_name"]
         staff_id = request.form["staff_id"]
@@ -393,6 +394,13 @@ def add_staff():
         contact = request.form["contact"]
         qualification =request.form["qualification"]
         image = request.files['image']
+
+        existing_staff = Staff.query.filter_by(staff_id=staff_id).first()
+        if existing_staff:
+            error_message = "Staff ID already exists. Please use a unique Staff ID."
+            branches = Branch.query.all()
+            return render_template("add_staff.html", branches=branches, error_message=error_message, form_data=request.form)
+
         if image:
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -420,25 +428,43 @@ def add_staff():
 @app.route("/edit_staff/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_staff(id):
-    staff = Staff.query.get(id)
+    staff = Staff.query.get_or_404(id)
+
     if request.method == "POST":
-        staff.staff_name = request.form["staff_name"]
-        staff.staff_id = request.form["staff_id"]
-        staff.designation = request.form["designation"]
-        staff.department = request.form["department"]
-        staff.branch_code = request.form["branch_code"]
-        staff.contact = request.form["contact"]
-        staff.qualification =request.form["qualification"]
+        new_staff_id = request.form["staff_id"]
+        staff_name = request.form["staff_name"]
+        designation = request.form["designation"]
+        department = request.form["department"]
+        branch_code = request.form["branch_code"]
+        contact = request.form["contact"]
+        qualification = request.form["qualification"]
+
+        # Check if new staff_id already exists (excluding current staff)
+        existing_staff = Staff.query.filter(Staff.staff_id == new_staff_id, Staff.id != staff.id).first()
+        if existing_staff:
+            error_message = "Staff ID already exists. Please use a unique Staff ID."
+            branches = Branch.query.all()
+            return render_template("edit_staff.html", staff=staff, branches=branches, error_message=error_message, form_data=request.form)
+
+        staff.staff_id = new_staff_id
+        staff.staff_name = staff_name
+        staff.designation = designation
+        staff.department = department
+        staff.branch_code = branch_code
+        staff.contact = contact
+        staff.qualification = qualification
+
         # Handle new image upload
-        if 'image' in request.files:
-            image = request.files['image']
+        if "image" in request.files:
+            image = request.files["image"]
             if image.filename:  # Only update if a new file is provided
                 filename = secure_filename(image.filename)
-                image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                image.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
                 staff.image_url = f"/static/staff_images/{filename}"
 
         db.session.commit()
-        return redirect(url_for('staff'))
+        return redirect(url_for("staff"))
+
     branches = Branch.query.all()
     return render_template("edit_staff.html", staff=staff, branches=branches)
 
@@ -561,7 +587,12 @@ def add_lecturer():
         branch_code = request.form["branch_code"]
         qualification = request.form["qualification"]
 
-        # Handle Image Upload
+        existing_lecturer = Lecturer.query.filter_by(staff_id=staff_id).first()
+        if existing_lecturer:
+            error_message = "Lecturer ID already exists. Please use a unique Lecturer ID."
+            branches = Branch.query.all()
+            return render_template("add_lecturer.html", branches=branches, error_message=error_message, form_data=request.form)
+
         image_file = request.files["image"]
         filename = None
         if image_file and image_file.filename != "":
@@ -586,28 +617,53 @@ def add_lecturer():
 @login_required
 def edit_lecturer(id):
     lecturer = Lecturer.query.get_or_404(id)
+    error_message = None  # Store error message if needed
 
     if request.method == "POST":
-        lecturer.name = request.form["name"]
-        lecturer.staff_id = request.form["staff_id"]
-        lecturer.designation = request.form["designation"]
-        lecturer.department = request.form["department"]
-        lecturer.contact = request.form["contact"]
-        lecturer.branch_code = request.form["branch_code"]
-        lecturer.qualification = request.form["qualification"]
+        new_staff_id = request.form["staff_id"]  # Keeping the field name as staff_id
+        lecturer_name = request.form["name"]
+        designation = request.form["designation"]
+        department = request.form["department"]
+        contact = request.form["contact"]
+        branch_code = request.form["branch_code"]
+        qualification = request.form["qualification"]
 
-        # Handle Image Update
-        if 'image' in request.files and request.files['image'].filename != '':
-            image_file = request.files['image']
+        # Check for duplicate staff_id (excluding the current lecturer)
+        existing_lecturer = Lecturer.query.filter(
+            Lecturer.staff_id == new_staff_id, Lecturer.id != lecturer.id
+        ).first()
+
+        if existing_lecturer:
+            error_message = "Staff ID already exists. Please use a unique Staff ID."
+            branches = Branch.query.all()
+            return render_template(
+                "edit_lecturer.html",
+                lecturer=lecturer,
+                branches=branches,
+                error_message=error_message,
+                form_data=request.form,
+            )
+
+        # Update Lecturer details
+        lecturer.staff_id = new_staff_id
+        lecturer.name = lecturer_name
+        lecturer.designation = designation
+        lecturer.department = department
+        lecturer.branch_code = branch_code
+        lecturer.contact = contact
+        lecturer.qualification = qualification
+
+        # Handle new image upload
+        if "image" in request.files and request.files["image"].filename != "":
+            image_file = request.files["image"]
             filename = secure_filename(image_file.filename)
-            image_path = os.path.join(app.config['UPLOAD_FOLDER_3'], filename)
+            image_path = os.path.join(app.config["UPLOAD_FOLDER_3"], filename)
             image_file.save(image_path)
-
-            # Update Lecturer's Image Field in the Database
             lecturer.image = filename
 
         db.session.commit()
         return redirect(url_for("view_lecturers"))
+
     branches = Branch.query.all()
     return render_template("edit_lecturer.html", lecturer=lecturer, branches=branches)
 

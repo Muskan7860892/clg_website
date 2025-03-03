@@ -4,8 +4,12 @@
 <form method="POST" action="{{ url_for('edit_staff', id=staff.id) }}" enctype="multipart/form-data">
   <label for="staff_name">Name:</label>
   <input type="text" id="staff_name" name="staff_name" value="{{ staff.staff_name }}" required><br>
-  <label for="staff_id">Staff ID:</label>
-  <input type="text" id="staff_id" name="staff_id" value="{{ staff.staff_id }}" required><br>
+  <label>Staff ID:</label>
+  <input type="text" name="staff_id" value="{{ staff.staff_id }}" required>
+  {% if error_message %}
+  <span style="color: red;">{{ error_message }}</span>
+  {% endif %}
+  <br>
   <label for="designation">Designation:</label>
   <input type="text" id="designation" name="designation" value="{{ staff.designation }}" required><br>
   <label for="department">Department:</label>

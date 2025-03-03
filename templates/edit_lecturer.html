@@ -8,6 +8,10 @@
 
     <label>Staff ID:</label>
     <input type="text" name="staff_id" value="{{ lecturer.staff_id }}" required>
+    {% if error_message %}
+    <span style="color: red;">{{ error_message }}</span>
+    {% endif %}
+    <br>
 
     <label>Designation:</label>
     <input type="text" name="designation" value="{{ lecturer.designation }}" required>
