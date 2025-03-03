@@ -8,7 +8,7 @@
   <style>
     .gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 10px;
         margin-top: 20px;
     }
@@ -136,7 +136,7 @@
   </div>
   <br>
 
-  <h3 class="text-success">Technical Staffs (Total: {{ staffs|length }})</h3>
+  <h3 class="text-success">Supporting Staffs (Total: {{ staffs|length }})</h3>
   <div>
     <table>
       <tr>
@@ -166,11 +166,11 @@
     </table>
   </div>
 
-  <h2 class="text-center text-warning">Department and Lab Images</h2>
+  <h2 class="text-center text-warning">office and Lab Images</h2>
   <div class="gallery">
     {% for image in branch.images %}
     <div class="gallery-item">
-      <img src="{{ image.image_url }}" alt="Branch Image" height="100" width="200" onclick="openModal(this.src)" >
+      <img src="{{ image.image_url }}" alt="Branch Image" height="200" width="300" onclick="openModal(this.src)" >
     </div>
     {% endfor %}
   </div>

@@ -329,8 +329,8 @@ def delete_branch(id):
 
 def branch_details(branch_code):
     branch = Branch.query.filter_by(branch_code=branch_code).first_or_404()  # Fetch branch details
-    staffs = Staff.query.filter_by(branch_code=branch_code).all()
-    lecturers = Lecturer.query.filter_by(branch_code=branch_code).all()
+    staffs = Staff.query.filter_by(branch_code=branch_code).order_by(Staff.staff_id.asc()).all()
+    lecturers = Lecturer.query.filter_by(branch_code=branch_code).order_by(Lecturer.staff_id.asc()).all()
     hod = HOD.query.filter_by(branch_code=branch_code).all()
     return render_template('branch_details.html', branch=branch, staffs=staffs, hod=hod, lecturers=lecturers)
 
@@ -343,12 +343,10 @@ def branch_names():
 @app.route('/manage_branch_images')
 @login_required
 def manage_branch_images():
-    branches = Branch.query.all()  # Get all branches
-    images = BranchImages.query.all()  # Get all images
+    branches = Branch.query.all()
+    images = BranchImages.query.all()
     return render_template('manage_branch_images.html', branches=branches, images=images)
 
-
-# Route to delete image
 @app.route('/delete_image/<int:image_id>', methods=['POST'])
 @login_required
 def delete_image(image_id):
@@ -378,11 +376,10 @@ def staff():
             (Staff.branch_code.ilike(f"%{query}%")) |
             (Staff.contact.ilike(f"%{query}%")) |
             (Staff.qualification.ilike(f"%{query}%"))
-        ).all()
+        ).order_by(Staff.staff_id.asc()).all()
     else:
-        staff_members= Staff.query.order_by(Staff.branch_code).all()
+        staff_members = Staff.query.order_by(Staff.staff_id.asc()).all()
     return render_template("view_staff.html", staff_members=staff_members)
-
 # Route: Add Staff
 @app.route("/add_staff", methods=["GET", "POST"])
 @login_required
@@ -462,12 +459,12 @@ def view_hods():
     if query:
         hods = HOD.query.filter(
             (HOD.hod_name.ilike(f"%{query}%")) |
-            (HOD.branch_code.ilike(f"%{query}%"))
-            (HOD.depatment.ilike(f"%{query}%"))
+            (HOD.branch_code.ilike(f"%{query}%")) |
+            (HOD.department.ilike(f"%{query}%")) |
             (HOD.qualification.ilike(f"%{query}%"))
-        ).all()
+        ).order_by(HOD.department.asc()).all()  # Sorting by hod_id in ascending order
     else:
-        hods = HOD.query.all()
+        hods = HOD.query.order_by(HOD.department.asc()).all()  # Sorting by hod_id in ascending order
     return render_template("view_hod.html", hod_members=hods)
 
 @app.route('/add_hod', methods=['GET', 'POST'])
@@ -539,18 +536,17 @@ def delete_hod(id):
 @login_required
 def view_lecturers():
     search_query = request.args.get("search", "")
-
     if search_query:
         lecturers = Lecturer.query.filter(
             (Lecturer.name.ilike(f"%{search_query}%")) |
             (Lecturer.staff_id.ilike(f"%{search_query}%")) |
             (Lecturer.designation.ilike(f"%{search_query}%")) |
-            (Lecturer.department.ilike(f"%{search_query}%"))
-            (Lecturer.qualification.ilike(f"%{search_query}%"))
+            (Lecturer.department.ilike(f"%{search_query}%")) |
+            (Lecturer.qualification.ilike(f"%{search_query}%")) |
             (Lecturer.branch_code.ilike(f"%{search_query}%"))
-        ).all()
+        ).order_by(Lecturer.staff_id.asc()).all()  # Sorting by staff_id in ascending order
     else:
-        lecturers = Lecturer.query.all()
+        lecturers = Lecturer.query.order_by(Lecturer.staff_id.asc()).all()  # Sorting by staff_id in ascending order
     return render_template("view_lecturer.html", lecturers=lecturers, search_query=search_query)
 
 @app.route("/lecturers/add", methods=["GET", "POST"])
