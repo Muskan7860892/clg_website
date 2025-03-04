@@ -41,7 +41,6 @@ login_manager.login_view = 'login'
 VIEW_COUNT_FILE = "views.txt"
 
 def get_views():
-    """Read the current view count from the file."""
     try:
         with open(VIEW_COUNT_FILE, "r") as file:
             return int(file.read().strip())
