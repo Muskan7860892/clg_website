@@ -213,17 +213,18 @@ body {
 
     <!-- Founder Section -->
     <div id="founder" class="content active-content">
-        <h2>Founder</h2>
+        <center><h2>Founder</h2>
         <img src="{{ url_for('static', filename='images/founder.jpg') }}" alt="Founder" class="profile-img">
         <p><b>Late Sri M.H. Jayaprakash Narayan</b></p>
         <p><b>Founder – Managing Trustee</b></p>
         <p>Panchajanya Vidyapeetha Welfare Trust (R)</p>
         <p>Dr. Ambedkar Institute of Technology was established in the year 1980 by Late Sri. M.H. Jayaprakash Narayan, Ex-MLA and Founder Managing Trustee of PVP Welfare Trust and Secretary of the institute. Sri M.H. Jayaprakash Narayan, an Ex-Syndicate/Senate Member of Bangalore University, was a great visionary and an educationist. He was a strong follower of the principles of Bharatha Ratna Dr. B.R. Ambedkar. He came from a very humble Background and was a member of Legislative Assembly for several terms. He fought relentlessly for the upliftment of the downtrodden people. He believed that education is the main path for the emancipation of the oppressed classes and started a number of educational institutions to cater to all levels of education in Bengaluru.</p>
     <a href="javascript:void(0);" class="back-button" onclick="goBackToAboutUs()">Back to About Us</a>
-    </div>
+        </center></div>
 
     <!-- Management Section -->
     <div id="management" class="content">
+        <center>
         <h2>Management</h2>
         <p>The TRUST has over 24 institutions with more than 10,000 students. As one of the fastest growing organization in the State of Karnataka, it has been offering quality education in every field of academics from Kindergarten to Post-Graduation and Research programs in science and technology at an affordable cost.
             The students who have passed out of the institutions of PVPWT in the last three and half decades have excelled in their life, bringing laurels and glory to the nation. Eminent academicians, scholars, leaders, industrialists and others have showered accolades on its achievements and accomplishments.
@@ -235,9 +236,11 @@ body {
             <p><b>{{ member.position }}</b></p>
             <p>{{ member.description }}</p>
         {% endfor %}
+        </center>
     </div>
 
     <div id="principal" class="content">
+        <center>
         <h2>Principal</h2>
         {% if principal %}
         <img src="{{ url_for('static', filename='management/' + principal.image) }}" alt="Principal" width="200" height="200" style="border-radius: 20px;">
@@ -248,7 +251,7 @@ body {
         <p>No Principal Information Available.</p>
         {% endif %}
     <a href="javascript:void(0);" class="back-button" onclick="goBackToAboutUs()">Back to About Us</a>
-
+        </center>
     </div>
 
     <!-- Activities Section -->

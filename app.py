@@ -193,7 +193,6 @@ def change_password():
             flash('Incorrect old password', 'danger')
             return redirect(url_for('change_password'))  # Reloads the same page with error
 
-        # Update password securely
         current_user.password = generate_password_hash(new_password)
         db.session.commit()
         flash('Password updated successfully', 'success')
@@ -337,7 +336,7 @@ def branch_details(branch_code):
 
 @app.route("/branch_names")
 def branch_names():
-    branches = Branch.query.all()  # Fetch all added branch names
+    branches = Branch.query.order_by(Branch.branch_name.asc()).all()  # Fetch all added branch names
     return render_template("branch_names.html", branches=branches)
 
 
