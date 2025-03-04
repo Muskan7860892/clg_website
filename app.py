@@ -379,7 +379,7 @@ def staff():
         ).order_by(Staff.staff_id.asc()).all()
     else:
         staff_members = Staff.query.order_by(Staff.staff_id.asc()).all()
-    return render_template("view_staff.html", staff_members=staff_members)
+    return render_template("view_staff.html", staff_members=staff_members, query=query)
 # Route: Add Staff
 @app.route("/add_staff", methods=["GET", "POST"])
 @login_required
@@ -429,6 +429,7 @@ def add_staff():
 @login_required
 def edit_staff(id):
     staff = Staff.query.get_or_404(id)
+    query = request.args.get('query', '')
 
     if request.method == "POST":
         new_staff_id = request.form["staff_id"]
@@ -444,7 +445,7 @@ def edit_staff(id):
         if existing_staff:
             error_message = "Staff ID already exists. Please use a unique Staff ID."
             branches = Branch.query.all()
-            return render_template("edit_staff.html", staff=staff, branches=branches, error_message=error_message, form_data=request.form)
+            return render_template("edit_staff.html", staff=staff, branches=branches, error_message=error_message, form_data=request.form, query=query)
 
         staff.staff_id = new_staff_id
         staff.staff_name = staff_name
@@ -463,20 +464,21 @@ def edit_staff(id):
                 staff.image_url = f"/static/staff_images/{filename}"
 
         db.session.commit()
-        return redirect(url_for("staff"))
+        return redirect(url_for("staff", query=query))
 
     branches = Branch.query.all()
-    return render_template("edit_staff.html", staff=staff, branches=branches)
+    return render_template("edit_staff.html", staff=staff, branches=branches, query=query)
 
 # Route: Delete Staff
 @app.route('/delete_staff/<int:id>', methods=['POST'])
 @login_required
 def delete_staff(id):
+    query = request.args.get('query', '')
     staff = Staff.query.get(id)
     if staff:
         db.session.delete(staff)
         db.session.commit()
-    return redirect(url_for('staff'))
+    return redirect(url_for('staff',query=query))
 
 @app.route('/hods')
 @login_required
@@ -561,7 +563,7 @@ def delete_hod(id):
 @app.route("/lecturers")
 @login_required
 def view_lecturers():
-    search_query = request.args.get("search", "")
+    search_query = request.args.get('search', '')
     if search_query:
         lecturers = Lecturer.query.filter(
             (Lecturer.name.ilike(f"%{search_query}%")) |
@@ -618,7 +620,7 @@ def add_lecturer():
 def edit_lecturer(id):
     lecturer = Lecturer.query.get_or_404(id)
     error_message = None  # Store error message if needed
-
+    search_query = request.args.get('search', '')
     if request.method == "POST":
         new_staff_id = request.form["staff_id"]  # Keeping the field name as staff_id
         lecturer_name = request.form["name"]
@@ -642,6 +644,7 @@ def edit_lecturer(id):
                 branches=branches,
                 error_message=error_message,
                 form_data=request.form,
+                search_query=search_query
             )
 
         # Update Lecturer details
@@ -662,17 +665,17 @@ def edit_lecturer(id):
             lecturer.image = filename
 
         db.session.commit()
-        return redirect(url_for("view_lecturers"))
+        return redirect(url_for("view_lecturers", search=search_query))
 
     branches = Branch.query.all()
-    return render_template("edit_lecturer.html", lecturer=lecturer, branches=branches)
+    return render_template("edit_lecturer.html", lecturer=lecturer, branches=branches, search_query=search_query)
 
 # Delete Lecturer
 @app.route("/lecturers/delete/<int:id>", methods=["POST"])
 @login_required
 def delete_lecturer(id):
     lecturer = Lecturer.query.get_or_404(id)
-
+    search_query = request.args.get('search', '')
     # Remove Image File if it Exists
     if lecturer.image:
         image_path = os.path.join(app.config["UPLOAD_FOLDER_3"], lecturer.image)
@@ -681,7 +684,7 @@ def delete_lecturer(id):
 
     db.session.delete(lecturer)
     db.session.commit()
-    return redirect(url_for("view_lecturers"))
+    return redirect(url_for("view_lecturers", search=search_query))
 
 @app.route('/admin/management')
 @login_required
