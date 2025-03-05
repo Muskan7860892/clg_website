@@ -1,6 +1,6 @@
 {% extends "staff.html" %}
 {% block content %}
-<h2>View Staff</h2>
+<h2>View Supporting Staff</h2>
 
 <form method="GET" action="{{ url_for('staff') }}">
   <input type="text" name="query"  placeholder="Search Supporting Staffs..." value="{{ request.args.get('query', '') }}">

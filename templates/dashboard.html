@@ -171,13 +171,14 @@
 
 <div class="sidebar" id="sidebar">
     <h2>Admin Panel</h2>
-    <nav>
+    <input type="text" id="searchBar" placeholder="Search..." onkeyup="searchSidebar()" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ddd;">
+    <nav id="navList">
         <button onclick="location.href='/notification/manage'">Manage Notification</button>
         <button onclick="location.href='/branch'">Branches</button>
         <button onclick="location.href='/staff'">Manage Supporting Staff</button>
         <button onclick="location.href='/hods'">Manage HOD's</button>
         <button onclick="location.href='/manage_branch_images'">Manage Images</button>
-        <button onclick="location.href='/lecturers'">Manage Lecturers</button>
+        <button onclick="location.href='/lecturers'">Manage Teaching Staffs</button>
         <div class="dropdown">
             <button onclick="toggleDropdown()">Manage Cells  ▼</button>
             <div class="dropdown-content" id="cellDropdown">
@@ -187,6 +188,10 @@
                 <a href="{{ url_for('view_cell_members', cell_name='Anti-Ragging Committee') }}">Anti-Ragging Committee</a>
                 <a href="{{ url_for('view_cell_members', cell_name='Anti-Ragging Squad') }}">Anti-Ragging Squad</a>
                 <a href="{{ url_for('view_cell_members', cell_name='WSW GR Cell') }}">WSW GR Cell</a>
+                <a href="{{ url_for('view_cell_members', cell_name='Internal Compliant Committee') }}">Internal Compliant Committee</a>
+                <a href="{{ url_for('view_cell_members', cell_name='Online Grievance Redressal Committee') }}">Online Grievance Redressal Committee</a>
+                <a href="{{ url_for('view_cell_members', cell_name='SC/ST Committee') }}">SC/ST Committee Cell</a>
+                <a href="{{ url_for('view_cell_members', cell_name='IQAC Committee') }}">IQAC Committee</a>
             </div>
         </div>
         <button onclick="location.href='/admin/management'">Manage Management Members</button>
@@ -234,7 +239,7 @@
                     <a href="/lecturers" class="text-decoration-none">
                         <div class="card text-white bg-primary">
                             <div class="card-body">
-                                <h5 class="card-title">Total Lecturers</h5>
+                                <h5 class="card-title">Total Teaching Staffs</h5>
                                 <h2>{{ total_lecturers }}</h2>
                             </div>
                         </div>
@@ -290,8 +295,50 @@
                 document.getElementById("cellDropdown").style.display = "none";
             }
         }
+        function searchSidebar() {
+            let input = document.getElementById('searchBar').value.toLowerCase();
+            let buttons = document.querySelectorAll('.sidebar nav button');
+            let dropdownLinks = document.querySelectorAll('.dropdown-content a');
 
+            let hasMatch = false;
 
+            buttons.forEach(button => {
+                let text = button.innerText.toLowerCase();
+                if (text.includes(input)) {
+                    button.style.display = "block"; // Show matching items
+                    button.style.backgroundColor = "#f0f0f0"; // Highlight matching items
+                    button.style.color = "black"; // Change text color for better visibility
+                } else {
+                    button.style.display = "none"; // Hide non-matching items
+                }
+            });
+        dropdownLinks.forEach(link => {
+            let text = link.innerText.toLowerCase();
+            if (text.includes(input)) {
+                link.style.display = "block"; // Show dropdown link if matched
+                link.style.backgroundColor = "#f0f0f0"; // Highlight
+                hasMatch = true;
+            } else {
+                link.style.display = "none"; // Hide non-matching dropdown items
+            }
+        });
+
+        // Show dropdown only if a match is found
+        let dropdowns = document.querySelectorAll('.dropdown-content');
+        dropdowns.forEach(dropdown => {
+            if (hasMatch) {
+                dropdown.style.display = "block";
+            } else {
+                dropdown.style.display = "none";
+            }
+        });
+    }
+
+    // Toggle dropdown when clicking on Manage Cells
+    function toggleDropdown() {
+        let dropdown = document.getElementById("cellDropdown");
+        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    }
     </script>
     <main>
         <h2>Branch Staff Distribution</h2>

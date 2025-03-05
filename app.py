@@ -64,7 +64,8 @@ def home():
 def about():
     management_list = Management.query.all()
     principal_info = Principal.query.first()
-    cells = ["Placement", "NSS", "Sports", "Anti-Ragging Committee", "Anti-Ragging Squad", "WSW GR Cell"]
+    cells = ["Placement", "NSS", "Sports", "Anti-Ragging Committee", "Anti-Ragging Squad", "WSW GR Cell", "Internal Compliant Committee", "Online Grievance Redressal Committee",
+             "SC/ST Committee", "IQAC Committee"]
     members = {cell: CellMember.query.filter_by(cell=cell).all() for cell in cells}
     return render_template("about.html", management=management_list, principal=principal_info, members=members)
 
@@ -213,7 +214,7 @@ def dashboard():
         lecturer_count = Lecturer.query.filter_by(branch_code=branch.branch_code).count()
         hod_count = HOD.query.filter_by(branch_code=branch.branch_code).count()
 
-        labels = ["Staff", "Lecturers", "HODs"]
+        labels = ["Supporting Staffs", "Teaching Staffs", "HODs"]
         sizes = [staff_count, lecturer_count, hod_count]
 
         colors = ["skyblue", "lightgreen", "lightcoral"]
@@ -343,8 +344,8 @@ def branch_names():
 @app.route('/manage_branch_images')
 @login_required
 def manage_branch_images():
-    branches = Branch.query.all()
-    images = BranchImages.query.all()
+    branches = Branch.query.order_by(Branch.branch_code.asc()).all()
+    images = BranchImages.query.order_by(BranchImages.branch_code.asc()).all()
     return render_template('manage_branch_images.html', branches=branches, images=images)
 
 @app.route('/delete_image/<int:image_id>', methods=['POST'])
@@ -563,19 +564,19 @@ def delete_hod(id):
 @app.route("/lecturers")
 @login_required
 def view_lecturers():
-    search_query = request.args.get('search', '')
-    if search_query:
+    query = request.args.get('query', '')
+    if query:
         lecturers = Lecturer.query.filter(
-            (Lecturer.name.ilike(f"%{search_query}%")) |
-            (Lecturer.staff_id.ilike(f"%{search_query}%")) |
-            (Lecturer.designation.ilike(f"%{search_query}%")) |
-            (Lecturer.department.ilike(f"%{search_query}%")) |
-            (Lecturer.qualification.ilike(f"%{search_query}%")) |
-            (Lecturer.branch_code.ilike(f"%{search_query}%"))
+            (Lecturer.name.ilike(f"%{query}%")) |
+            (Lecturer.staff_id.ilike(f"%{query}%")) |
+            (Lecturer.designation.ilike(f"%{query}%")) |
+            (Lecturer.department.ilike(f"%{query}%")) |
+            (Lecturer.qualification.ilike(f"%{query}%")) |
+            (Lecturer.branch_code.ilike(f"%{query}%"))
         ).order_by(Lecturer.staff_id.asc()).all()  # Sorting by staff_id in ascending order
     else:
         lecturers = Lecturer.query.order_by(Lecturer.staff_id.asc()).all()  # Sorting by staff_id in ascending order
-    return render_template("view_lecturer.html", lecturers=lecturers, search_query=search_query)
+    return render_template("view_lecturer.html", lecturers=lecturers, query=query)
 
 @app.route("/lecturers/add", methods=["GET", "POST"])
 @login_required
@@ -620,7 +621,7 @@ def add_lecturer():
 def edit_lecturer(id):
     lecturer = Lecturer.query.get_or_404(id)
     error_message = None  # Store error message if needed
-    search_query = request.args.get('search', '')
+    query = request.args.get('query', '')
     if request.method == "POST":
         new_staff_id = request.form["staff_id"]  # Keeping the field name as staff_id
         lecturer_name = request.form["name"]
@@ -644,7 +645,7 @@ def edit_lecturer(id):
                 branches=branches,
                 error_message=error_message,
                 form_data=request.form,
-                search_query=search_query
+                query=query
             )
 
         # Update Lecturer details
@@ -665,17 +666,17 @@ def edit_lecturer(id):
             lecturer.image = filename
 
         db.session.commit()
-        return redirect(url_for("view_lecturers", search=search_query))
+        return redirect(url_for("view_lecturers", query=query))
 
     branches = Branch.query.all()
-    return render_template("edit_lecturer.html", lecturer=lecturer, branches=branches, search_query=search_query)
+    return render_template("edit_lecturer.html", lecturer=lecturer, branches=branches, query=query)
 
 # Delete Lecturer
 @app.route("/lecturers/delete/<int:id>", methods=["POST"])
 @login_required
 def delete_lecturer(id):
     lecturer = Lecturer.query.get_or_404(id)
-    search_query = request.args.get('search', '')
+    query = request.args.get('query', '')
     # Remove Image File if it Exists
     if lecturer.image:
         image_path = os.path.join(app.config["UPLOAD_FOLDER_3"], lecturer.image)
@@ -684,7 +685,7 @@ def delete_lecturer(id):
 
     db.session.delete(lecturer)
     db.session.commit()
-    return redirect(url_for("view_lecturers", search=search_query))
+    return redirect(url_for("view_lecturers", query=query))
 
 @app.route('/admin/management')
 @login_required

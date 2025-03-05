@@ -1,8 +1,9 @@
 {% extends "lecturer.html" %}
 {% block content %}
-<h2>Edit Lecturer</h2>
+<h2>Edit Teaching Staffs</h2>
 
-<form method="POST" action="{{ url_for('edit_lecturer', id=lecturer.id, search_query = request.args.get('search', '')) }}" enctype="multipart/form-data">
+<form method="POST" action="{{ url_for('edit_lecturer', id=lecturer.id, query=request.args.get('query', '')) }}" enctype="multipart/form-data">
+
     <label>Name:</label>
     <input type="text" name="name" value="{{ lecturer.name }}" required>
 

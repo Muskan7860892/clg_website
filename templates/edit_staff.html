@@ -1,6 +1,6 @@
 {% extends "staff.html" %}
 {% block content %}
-<h2>Edit Staff</h2>
+<h2>Edit Supporting Staff</h2>
 <form method="POST" action="{{ url_for('edit_staff', id=staff.id, query=request.args.get('query', '')) }}" enctype="multipart/form-data">
   <label for="staff_name">Name:</label>
   <input type="text" id="staff_name" name="staff_name" value="{{ staff.staff_name }}" required><br>
