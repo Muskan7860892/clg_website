@@ -1,6 +1,6 @@
 {% extends "cell_members.html" %}
 {% block content %}
-<<h2>{{ cell_name }} Members</h2>
+<h2>{{ cell_name }} Members</h2>
 
 {% if members %}
 <table border="1">
@@ -11,7 +11,13 @@
     </tr>
     {% for member in members %}
     <tr>
-        <td><img src="{{ url_for('static', filename='management/' + member.image) }}" width="100"></td>
+        <td>
+            {% if member.image %}
+            <img src="{{ url_for('static', filename='management/' + member.image) }}" width="100">
+            {% else %}
+                No Image
+            {% endif %}
+        </td>
         <td>{{ member.name }}</td>
         <td>
             <a href="{{ url_for('edit_cell_member', id=member.id) }}">

@@ -65,7 +65,7 @@ def about():
     management_list = Management.query.all()
     principal_info = Principal.query.first()
     cells = ["Placement", "NSS", "Sports", "Anti-Ragging Committee", "Anti-Ragging Squad", "WSW GR Cell", "Internal Compliant Committee", "Online Grievance Redressal Committee",
-             "SC/ST Committee", "IQAC Committee"]
+             "SCST Committee", "IQAC Committee"]
     members = {cell: CellMember.query.filter_by(cell=cell).all() for cell in cells}
     return render_template("about.html", management=management_list, principal=principal_info, members=members)
 

@@ -34,7 +34,9 @@
         <td>{{ lecturer.qualification }}</td>
         <td>
             {% if lecturer.image %}
+            <a href="javascript:void(0);" onclick="openModal('{{ url_for('static', filename='lecturer_images/' + lecturer.image) }}')">
                 <img src="{{ url_for('static', filename='lecturer_images/' + lecturer.image) }}" alt="Lecturer Image" width="100" height="100">
+            </a>
             {% else %}
                 No Image
             {% endif %}
@@ -51,6 +53,10 @@
     {% endfor %}
     </tbody>
 </table>
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
 
 <style>
     .edit-btn {
@@ -79,4 +85,14 @@
         background-color: #a71d2a;
     }
 </style>
+<script>
+    function openModal(imageSrc) {
+        document.getElementById('imageModal').style.display = "flex";
+        document.getElementById('modalImage').src = imageSrc;
+    }
+
+    function closeModal() {
+        document.getElementById('imageModal').style.display = "none";
+    }
+</script>
 {% endblock %}
