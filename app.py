@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, session, send_from_directory
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from models import db, User, Branch, Staff, HOD, BranchImages, Lecturer, Management, Principal, CellMember, Notification
+from models import db, User, Branch, Staff, HOD, BranchImages, Lecturer, Management, Principal, CellMember, Notification, GalleryImage
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import os
@@ -73,10 +73,6 @@ def about():
 def contact():
     return render_template("contact.html")
 
-@app.route("/gallery")
-def gallery():
-    return render_template("gallery.html")
-
 @app.route('/admission')
 def admission():
     return render_template('admission.html')
@@ -89,19 +85,70 @@ def application_form():
 def documents():
     return render_template('documents.html')
 
-@app.route('/sports')
-def sports():
-    return render_template('sports.html')
+@app.route('/gallery')
+def gallery():
+    nss_images = GalleryImage.query.filter_by(category='NSS').all()
+    sports_images = GalleryImage.query.filter_by(category='Sports').all()
+    campus_images = GalleryImage.query.filter_by(category='Campus').all()
+    library_images = GalleryImage.query.filter_by(category='Library').all()
+    return render_template('gallery.html', nss=nss_images,sports=sports_images, campus=campus_images, library=library_images )
 
-@app.route('/campus')
-def campus():
-    return render_template('campus.html')  # Renders your campus page
+@app.route('/sports')
+def sports_gallery():
+    sports_images = GalleryImage.query.filter_by(category='Sports').all()
+    return render_template('sports.html', sports=sports_images)
 
 @app.route('/nss')
-def nss():
-    return render_template('nss.html')  # Renders the NSS Events page
+def nss_gallery():
+    nss_images = GalleryImage.query.filter_by(category='NSS').all()
+    return render_template('nss.html', nss=nss_images)
+
+@app.route('/campus')
+def campus_gallery():
+    campus_images = GalleryImage.query.filter_by(category='Campus').all()
+    return render_template('campus.html', campus=campus_images)
+
+@app.route('/library')
+def library_gallery():
+    library_images = GalleryImage.query.filter_by(category='Library').all()
+    return render_template('library.html', library=library_images)
+
+@app.route('/manage_gallery', methods=['GET', 'POST'])
+@login_required
+def upload_image1():
+    if request.method == 'POST':
+        if 'image' not in request.files:
+            return redirect(request.url)
+
+        file = request.files['image']
+        category = request.form['category']
+
+        if file.filename == '':
+            return redirect(request.url)
+
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER_2'], filename)
+        file.save(file_path)
+
+        new_image = GalleryImage(category=category, image_url=file_path)
+        db.session.add(new_image)
+        db.session.commit()
+
+    images = GalleryImage.query.all()
+    return render_template('manage_gallery.html', images=images)
+
+@app.route('/delete/<int:image_id>')
+@login_required
+def delete_image1(image_id):
+    image = GalleryImage.query.get(image_id)
+    if image:
+        os.remove(image.image_url)  # Delete file from storage
+        db.session.delete(image)
+        db.session.commit()
+    return redirect(url_for('upload_image1'))  # Renders the NSS Events page
 
 @app.route('/notification/manage', methods=['GET', 'POST'])
+@login_required
 def manage_notification():
     if request.method == 'POST':
         message = request.form.get('message')
@@ -121,6 +168,7 @@ def manage_notification():
     return render_template('manage_notification.html', notifications=notifications)
 
 @app.route('/notification/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_notification(id):
     notification = Notification.query.get_or_404(id)
 
@@ -142,6 +190,7 @@ def edit_notification(id):
     return render_template('edit_notification.html', notification=notification)
 
 @app.route('/notification/delete/<int:id>', methods=['POST'])
+@login_required
 def delete_notification(id):
     notification = Notification.query.get_or_404(id)
 
@@ -157,7 +206,6 @@ def delete_notification(id):
 @app.route('/download/<filename>')
 def download_pdf(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER_5'], filename, as_attachment=True)
-
 
 @app.route('/admin')
 def admin():
@@ -240,7 +288,6 @@ def dashboard():
         buf.close()
         plt.close()
 
-    # Count totals
     total_staff = Staff.query.count()
     total_branches = Branch.query.count()
     total_lecturers = Lecturer.query.count()

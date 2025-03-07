@@ -53,11 +53,6 @@
     {% endfor %}
     </tbody>
 </table>
-<div id="imageModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img class="modal-content" id="modalImage">
-</div>
-
 <style>
     .edit-btn {
         background-color: #007BFF;
@@ -85,14 +80,4 @@
         background-color: #a71d2a;
     }
 </style>
-<script>
-    function openModal(imageSrc) {
-        document.getElementById('imageModal').style.display = "flex";
-        document.getElementById('modalImage').src = imageSrc;
-    }
-
-    function closeModal() {
-        document.getElementById('imageModal').style.display = "none";
-    }
-</script>
 {% endblock %}

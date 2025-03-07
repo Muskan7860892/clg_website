@@ -175,10 +175,11 @@
     <nav id="navList">
         <button onclick="location.href='/notification/manage'">Manage Notification</button>
         <button onclick="location.href='/branch'">Branches</button>
-        <button onclick="location.href='/staff'">Manage Supporting Staff</button>
         <button onclick="location.href='/hods'">Manage HOD's</button>
-        <button onclick="location.href='/manage_branch_images'">Manage Images</button>
+        <button onclick="location.href='/staff'">Manage Supporting Staff</button>
         <button onclick="location.href='/lecturers'">Manage Teaching Staffs</button>
+        <button onclick="location.href='/manage_branch_images'">Manage Images</button>
+        <button onclick="location.href='/manage_gallery'">Manage gallery Images</button>
         <div class="dropdown">
             <button onclick="toggleDropdown()">Manage Cells  ▼</button>
             <div class="dropdown-content" id="cellDropdown">
@@ -212,7 +213,6 @@
         <div class="container mt-5">
             <p class="view-counter">Total Views: <span>{{ views }}</span></p>
             <div class="row">
-                <!-- Total Students -->
                 <div class="col-md-4 mb-3">
                     <a href="/staff" class="text-decoration-none">
                         <div class="card text-white bg-success">

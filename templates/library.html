@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Events</title>
+    <title>Library</title>
     <style>
         body {
             margin: 0;
@@ -138,7 +138,7 @@
         </ul>
     </div>
     <div class="gallery">
-        {% for img in sports %}
+        {% for img in library %}
         <img src="{{ img.image_url }}" width="200" onclick="openFullScreen(this)">
         {% endfor %}
     </div>

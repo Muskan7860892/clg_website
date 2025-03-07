@@ -141,11 +141,9 @@
 
     <!-- ✅ Gallery Section -->
     <div class="gallery">
-        <img src="{{ url_for('static', filename='images/cleaning.jpg') }}" alt="Cleaning" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/cleaning1.jpg') }}" alt="Cleaning 1" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/seva.jpg') }}" alt="Seva" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/yoga.jpg') }}" alt="Yoga" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/yoga1.jpg') }}" alt="Yoga 1" onclick="openFullScreen(this)">
+        {% for img in nss %}
+        <img src="{{ img.image_url }}" width="200" onclick="openFullScreen(this)">
+        {% endfor %}
     </div>
 </div>
 

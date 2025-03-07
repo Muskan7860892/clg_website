@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Upload Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            background: silver;
+            padding: 20px;
+            width: 50%;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        select, input[type="file"], button {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width:40%;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .gallery div {
+            background: white;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .gallery div:hover {
+            transform: scale(1.05);
+        }
+        .gallery img {
+            width: 200px;
+            height: auto;
+            border-radius: 5px;
+        }
+        .delete-btn {
+            display: block;
+            background-color: red;
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Upload Image</h2>
+
+<form action="/manage_gallery" method="post" enctype="multipart/form-data">
+    <label>Choose Category:</label>
+    <select name="category">
+        <option value="Sports">Sports</option>
+        <option value="NSS">NSS</option>
+        <option value="Campus">Campus</option>
+        <option value="Library">Library</option>
+    </select>
+    <br>
+    <input type="file" name="image" required>
+    <br>
+    <button type="submit">Upload</button>
+</form>
+
+<hr>
+
+<h2>Manage Images</h2>
+
+{% for category, category_name in [('Sports', 'Sports Gallery'), ('NSS', 'NSS Gallery'), ('Campus', 'Campus Gallery'), ('Library', 'Library Gallery')] %}
+<h3>{{ category_name }}</h3>
+<div class="gallery">
+    {% for img in images if img.category == category %}
+    <div>
+        <img src="{{ img.image_url }}" alt="{{ category_name }}">
+        <a href="{{ url_for('delete_image1', image_id=img.id) }}" class="delete-btn" onclick="return confirm('Are you sure?')">Delete</a>
+    </div>
+    {% endfor %}
+</div>
+{% endfor %}
+
+</body>
+</html>

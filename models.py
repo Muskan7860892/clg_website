@@ -36,6 +36,11 @@ class BranchImages(db.Model):
     branch_code = db.Column(db.String(10), db.ForeignKey('branches.branch_code'), nullable=False)  # Fixed FK reference
     image_url = db.Column(db.String(255), nullable=False)
 
+class GalleryImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    category = db.Column(db.String(50), nullable=False)
+    image_url = db.Column(db.String(255), nullable=False)
+
 class Staff(db.Model):
     __tablename__ = 'staff'
     id = db.Column(db.Integer, primary_key=True)

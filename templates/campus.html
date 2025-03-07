@@ -110,19 +110,12 @@
 
     <!-- ✅ Campus Gallery -->
     <div class="campus">
-        <img src="{{ url_for('static', filename='images/campus1.jpg') }}" alt="Campus Photo 1" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/campus2.jpg') }}" alt="Campus Photo 2" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/campus3.jpg') }}" alt="Campus Photo 3" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/campus4.jpg') }}" alt="Campus Photo 4" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/campus5.jpg') }}" alt="Campus Photo 5" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/campus7.jpg') }}" alt="Campus Photo 7" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/campus8.jpg') }}" alt="Campus Photo 8" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/campus9.jpg') }}" alt="Campus Photo 9" onclick="openFullScreen(this)">
-        <img src="{{ url_for('static', filename='images/campus10.jpg') }}" alt="Campus Photo 10" onclick="openFullScreen(this)">
+        {% for img in campus %}
+        <img src="{{ img.image_url }}" width="200" onclick="openFullScreen(this)">
+        {% endfor %}
     </div>
 </div>
 
-<!-- ✅ Full-Screen Image Overlay -->
 <div class="fullscreen-overlay" id="fullscreenOverlay" onclick="closeFullScreen()">
     <img id="fullscreenImage" src="" alt="Full-Screen Image">
 </div>
