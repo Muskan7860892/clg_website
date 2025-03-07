@@ -865,8 +865,8 @@ with app.app_context():
     db.create_all()  # Ensure tables are created
 
     # Check if admin user exists, if not, create one
-    if not User.query.filter_by(username="admin123").first():
-        new_user = User(username="admin123")
+    if not User.query.filter_by(username="PVP_Polytechnic_IS22").first():
+        new_user = User(username="PVP_Polytechnic_IS22")
         new_user.set_password("password")  # Hash the password
         db.session.add(new_user)
         db.session.commit()
