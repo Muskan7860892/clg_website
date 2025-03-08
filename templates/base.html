@@ -162,7 +162,7 @@
         justify-content: center;
         align-items: center;
         opacity: 0;  /* Initially hidden */
-        animation: fadeInOut 3s ease-in-out forwards;
+        animation: fadeInOut 2s ease-in-out forwards;
         z-index: 9999; /* Ensure it appears above everything */
     }
 
@@ -188,7 +188,7 @@
         background-size: 400% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        animation: lightPass 3s linear infinite;
+        animation: lightPass 2s linear infinite;
 
         /* Fixed position at top right */
         position: fixed;
@@ -235,15 +235,14 @@
 
     setTimeout(() => {
         document.querySelector(".overlay").remove();
-    }, 3000);
+    }, 2000);
 </script>
-
 
     <header>
             <h1><font color="red"><font size="80">PVP POLYTECHNIC</font></font></h1>
 
         <img src="{{ url_for('static', filename='images/logo1.jpg') }}" alt="PVP Polytechnic Logo" class="logo"><br>
-        <div id="notification-bar"><marquee diretion="left"><font color="01F9C6"> All the diploma courses are available in this pvp college</font></marquee></div><br>
+        <div id="notification-bar"><marquee diretion="left"><font color="01F9C6"> All Courses are Available</font></marquee></div><br>
 
         <nav>
             <ul>
@@ -259,7 +258,7 @@
     </header>
 
     <div class="overlay">
-        <div class="powered-text"><b>Powered by</b><br><u>Balakrishna<br>Pavan S<br>Muskan S<br>Nuthan Kumar<br>Yashwanth S<br>And Team NRVPs</u></div>
+        <div class="powered-text"><u>Balakrishna<br>Pavan S<br>Muskan S<br>Nuthan Kumar<br>Yashwanth S<br>And Team NRVPs</u></div>
     </div>
 
     <main>
@@ -366,9 +365,9 @@
  }
 </script>
 </body>
-    <footer>
+    <footer style="text-align:right;">
 
-        <p><font color="01F9C6">&copy; 2025 PVP Polytechnic. All rights reserved.</font></p>
+        <p><font color="01F9C6">&copy; 2025 PVP Polytechnic. All rights reserved.<br>Powered by NRVPs</font></p>
     </footer>
 </html>
 
