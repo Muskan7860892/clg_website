@@ -17,57 +17,117 @@
       justify-content: center;
       align-items: center;
     }
-    .chatbot-icon {
+    .chat-container {
+      width: 300px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: none; /* Initially hidden */
+      flex-direction: column;
       position: fixed;
-      bottom: 100px;
+      bottom: 160px;
+      right: 70px;
+      z-index: 1000;
+    }
+    .chat-header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      position: relative;
+    }
+
+    .chat-header span {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    /* Chat Messages Area with Scrollbar */
+    .chat-messages {
+      flex: 1;
+      padding: 15px;
+      border-bottom: 1px solid #ddd;
+      max-height: 300px; /* Limits how tall the messages area can get */
+      overflow-y: auto;  /* Scroll vertically when content exceeds max-height */
+      overflow-x: hidden;
+    }
+
+    /* Optional: Customize the scrollbar for WebKit browsers */
+    .chat-messages::-webkit-scrollbar {
+      width: 8px;
+    }
+    .chat-messages::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 4px;
+    }
+    .chat-messages::-webkit-scrollbar-thumb:hover {
+      background-color: #999;
+    }
+
+    /* Message bubbles */
+    .message {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      max-width: 80%;
+      word-wrap: break-word; /* Ensures long text wraps within the bubble */
+    }
+
+    .message.user {
+      background-color: #007bff;
+      color: #fff;
+      align-self: flex-end;
+    }
+
+    .message.bot {
+      background-color: #f1f1f1;
+      color: #333;
+      align-self: flex-start;
+    }
+
+    /* Input area at the bottom */
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+
+    .chat-input button {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Floating Chatbot Icon */
+    .chat-icon {
+      position: fixed;
+      bottom: 90px;
       right: 60px;
-      background-color: #ADDFFF;
-      color: black;
-      border-radius: 10%;
-      width: 90px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
+      background-color: #007bff;
+      border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       cursor: pointer;
-      z-index: 1000;
-      transition: transform 0.3s ease;
-       }
-
-    .chatbot-icon:hover {
-      transform: scale(1.1);
-    }
-
-    .chatbot-window {
-      display: none;
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      width: 90%;
-      max-width: 300px;
-      height: 400px;
-      background-color: white;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-      z-index: 1000;
-    }
-
-    .chatbot-header {
-      background-color: #ADDFFF;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      font-size: 16px;
-      font-weight: bold;
-        }
-
-    .chatbot-content {
-      padding: 10px;
-      height: calc(100% - 40px);
-      overflow-y: auto;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 1001;
     }
 
     .close-btn {
@@ -91,10 +151,11 @@
         .logo {
             max-width: 100px;  /* ✅ Scaled logo for mobile */
         }
-        .chatbot-window {
-            width: 90%;/* ✅ Chatbot fits mobile screen */
+        .chat-container {
+            width: 70%;/* ✅ Chatbot fits mobile screen */
             top:90px;
-            left: 100px:
+            left: 100px;
+            bottom: auto;
         }
         nav ul {
             flex-direction: column;  /* ✅ Stacks menu items vertically */
@@ -107,7 +168,7 @@
             left: 5%;
             bottom: 10px;
         }
-        .chatbot-icon {
+        .chat-icon {
             top: 30px;
         }
         #background-slider {
@@ -151,59 +212,6 @@
         margin-top: 5px;
     }
 
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.6); /* Black with slight transparency */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;  /* Initially hidden */
-        animation: fadeInOut 2s ease-in-out forwards;
-        z-index: 9999; /* Ensure it appears above everything */
-    }
-
-    @keyframes lightPass {
-        0% { background-position: -200%; }
-        100% { background-position: 200%; }
-    }
-
-    .powered-text {
-        font-size: 25px; /* Big and professional */
-        letter-spacing: 3px;
-        font-family: 'Poppins', sans-serif;
-
-        /* Dimmer Glow Effect */
-        color: rgba(255, 255, 255, 0.05); /* Even more transparent */
-        text-shadow:
-            0px 0px 5px rgba(255, 255, 255, 0.3), /* Softer outer glow */
-            0px 0px 10px rgba(255, 255, 255, 0.5), /* Medium glow */
-            0px 0px 20px rgba(255, 255, 255, 0.7); /* Inner glow */
-
-        /* Light Sweep Effect */
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
-        background-size: 400% 100%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: lightPass 2s linear infinite;
-
-        /* Fixed position at top right */
-        position: fixed;
-        top: 30px;
-        right: 70px;
-        z-index: 1000;
-    }
-    /* Animation */
-    @keyframes fadeInOut {
-        0% { opacity: 0; }
-        25% { opacity: 1; }  /* Fade in */
-        75% { opacity: 1; }  /* Stay visible for 2 sec */
-        100% { opacity: 0; }  /* Fade out */
-    }
-
     </style>
 </head>
 <body>
@@ -233,9 +241,6 @@
     // Initial background setup
     window.onload = changeBackground;
 
-    setTimeout(() => {
-        document.querySelector(".overlay").remove();
-    }, 2000);
 </script>
 
     <header>
@@ -257,26 +262,27 @@
         </nav>
     </header>
 
-    <div class="overlay">
-        <div class="powered-text"><u>Balakrishna<br>Pavan S<br>Muskan S<br>Nuthan Kumar<br>Yashwanth S<br>And Team NRVPs</u></div>
-    </div>
-
     <main>
         {% block content %}{% endblock %}
     </main>
-    <div class="chatbot-icon" onclick="toggleChatbot()">
+    <div class="chat-icon" onclick="toggleChat()">
     💬 AI chatbot
   </div>
 
-  <div class="chatbot-window" id="chatbot">
-    <div class="chatbot-header">
-      Chatbot
-      <button class="close-btn" onclick="toggleChatbot()">✖</button>
+<div class="chat-container" id="chat-container">
+    <div class="chat-header">
+        College Chatbot
+        <span onclick="toggleChat()">✖</span>
     </div>
-    <div class="chatbot-content">
-      <p>Hello! How can I assist you today?</p>
+    <div class="chat-messages" id="chat-messages">
+        <!-- Empty: No default messages -->
     </div>
-  </div>
+    <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Type your message..."/>
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
 <div class="notification-box" id="notificationBox">
     <div class="notification-header">
         🔔 Notifications
@@ -355,14 +361,53 @@
         notification.style.display = "none";
     }
 
-    function toggleChatbot() {
-      const chatbot = document.getElementById('chatbot');
-      if (chatbot.style.display === 'block') {
-        chatbot.style.display = 'none';
-      } else {
-        chatbot.style.display = 'block';
-      }
- }
+    function toggleChat() {
+      const chatContainer = document.getElementById("chat-container");
+      chatContainer.style.display = (chatContainer.style.display === "none" || chatContainer.style.display === "")
+        ? "flex"
+        : "none";
+    }
+
+    function sendMessage() {
+      const userInput = document.getElementById("user-input").value.trim();
+      if (!userInput) return;
+
+      // Display user message
+      const chatMessages = document.getElementById("chat-messages");
+      const userMessage = document.createElement("div");
+      userMessage.className = "message user";
+      userMessage.textContent = userInput;
+      chatMessages.appendChild(userMessage);
+
+      // Clear input field
+      document.getElementById("user-input").value = "";
+
+      // Scroll to the bottom to show the latest user message
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      // Simulate bot response using fetch
+      // (Replace "/get_response" with your actual backend endpoint)
+      fetch("/get_response", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userInput }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        const botMessage = document.createElement("div");
+        botMessage.className = "message bot";
+        botMessage.textContent = data.response;
+        chatMessages.appendChild(botMessage);
+
+        // Scroll to the bottom again after bot message arrives
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+    }
 </script>
 </body>
     <footer style="text-align:right;">

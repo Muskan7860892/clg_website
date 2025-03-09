@@ -1,8 +1,9 @@
-from flask import Flask, render_template, redirect, url_for, request, flash, session, send_from_directory
+from flask import Flask, render_template, redirect, url_for, request, flash, session, send_from_directory, jsonify
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from models import db, User, Branch, Staff, HOD, BranchImages, Lecturer, Management, Principal, CellMember, Notification, GalleryImage
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from chatbot_logic import get_response
 import os
 import matplotlib.pyplot as plt
 import io
@@ -59,6 +60,13 @@ def home():
     views = update_views()
     notifications = Notification.query.order_by(Notification.id.desc()).all()
     return render_template("base.html", notifications=notifications, views=views)
+
+
+@app.route("/get_response", methods=["POST"])
+def chatbot_response():
+    user_input = request.json.get("message")
+    response = get_response(user_input)
+    return jsonify({"response": response})
 
 @app.route("/about")
 def about():
