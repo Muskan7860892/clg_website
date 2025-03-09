@@ -25,8 +25,8 @@
       display: none; /* Initially hidden */
       flex-direction: column;
       position: fixed;
-      bottom: 160px;
-      right: 70px;
+      bottom: 140px;
+      left: 20px;
       z-index: 1000;
     }
     .chat-header {
@@ -78,18 +78,21 @@
       border-radius: 5px;
       max-width: 80%;
       word-wrap: break-word; /* Ensures long text wraps within the bubble */
+     position: relative;
     }
 
     .message.user {
       background-color: #007bff;
       color: #fff;
-      align-self: flex-end;
+      margin-left: auto; /* Align to the right */
+      border-radius: 10px 10px 0 10px;
     }
-
     .message.bot {
       background-color: #f1f1f1;
       color: #333;
-      align-self: flex-start;
+      margin-right: auto; /* Align to the left */
+      border-radius: 10px 10px 10px 0; /* Rounded corners on the left */
+      white-space: pre-line;
     }
 
     /* Input area at the bottom */
@@ -116,15 +119,16 @@
     /* Floating Chatbot Icon */
     .chat-icon {
       position: fixed;
-      bottom: 90px;
-      right: 60px;
-      width: 60px;
+      bottom: 75px;
+      left: 20px;
+      width: 90px;
       height: 60px;
       background-color: #007bff;
-      border-radius: 50%;
+      border-radius: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
+      text-align: center;
       cursor: pointer;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       z-index: 1001;
@@ -152,7 +156,7 @@
             max-width: 100px;  /* ✅ Scaled logo for mobile */
         }
         .chat-container {
-            width: 70%;/* ✅ Chatbot fits mobile screen */
+            width: 70%;
             top:90px;
             left: 100px;
             bottom: auto;
@@ -162,14 +166,17 @@
         }
         nav ul li {
             text-align: center;
+            padding: 6px;
         }
         .notification-box {
-            width: 40%; /* Make it responsive */
-            left: 5%;
-            bottom: 10px;
+            top: auto ! Important; /* Override any previous top positioning */
+            bottom: 10px; /* Move it to the bottom */
+            width: 80%; /* Adjust width for mobile screens */
+
         }
         .chat-icon {
             top: 30px;
+            right: 10px;
         }
         #background-slider {
             height: 100%;  /* ✅ Smaller background image for mobile */
@@ -177,8 +184,8 @@
     }
     .notification-box {
         position: absolute;
-        bottom: 50px; /* Moved slightly up */
-        left: 20px; /* Positioned on the left */
+        top: 40px; /* Moved slightly up */
+        right: 20px; /* Positioned on the left */
         width: 350px;
         height: 100px;
         background: #ADDFFF;
@@ -210,6 +217,28 @@
         text-decoration: underline;
         display: block;
         margin-top: 5px;
+    }
+    .feedback-container {
+        position: fixed;
+        right: 30px;
+        bottom: 40%;
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .feedback-container button {
+        background-color: black;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 13px;
+        border-radius: 5px;
+    }
+
+    .feedback-container button:hover {
+        background-color: #0056b3;
     }
 
     </style>
@@ -245,10 +274,12 @@
 
     <header>
             <h1><font color="red"><font size="80">PVP POLYTECHNIC</font></font></h1>
-
+        <div class="feedback-container" >
+            <button id="like-btn" onclick="sendFeedback('like')">👍  <span id="like-count">0</span></button>
+            <button id="dislike-btn" onclick="sendFeedback('dislike')">👎  <span id="dislike-count">0</span></button>
+        </div>
         <img src="{{ url_for('static', filename='images/logo1.jpg') }}" alt="PVP Polytechnic Logo" class="logo"><br>
         <div id="notification-bar"><marquee diretion="left"><font color="01F9C6"> All Courses are Available</font></marquee></div><br>
-
         <nav>
             <ul>
             <li><a href="{{ url_for('home') }}" >Home</a> </li>
@@ -282,6 +313,7 @@
         <button onclick="sendMessage()">Send</button>
     </div>
 </div>
+
 
 <div class="notification-box" id="notificationBox">
     <div class="notification-header">
@@ -360,7 +392,6 @@
     function closeNotification() {
         notification.style.display = "none";
     }
-
     function toggleChat() {
       const chatContainer = document.getElementById("chat-container");
       chatContainer.style.display = (chatContainer.style.display === "none" || chatContainer.style.display === "")
@@ -368,49 +399,85 @@
         : "none";
     }
 
-    function sendMessage() {
-      const userInput = document.getElementById("user-input").value.trim();
-      if (!userInput) return;
+function sendMessage() {
+  const userInput = document.getElementById("user-input").value.trim();
+  if (!userInput) return;
 
-      // Display user message
-      const chatMessages = document.getElementById("chat-messages");
-      const userMessage = document.createElement("div");
-      userMessage.className = "message user";
-      userMessage.textContent = userInput;
-      chatMessages.appendChild(userMessage);
+  // Display user message
+  const chatMessages = document.getElementById("chat-messages");
+  const userMessage = document.createElement("div");
+  userMessage.className = "message user";
+  userMessage.textContent = userInput;
+  chatMessages.appendChild(userMessage);
 
-      // Clear input field
-      document.getElementById("user-input").value = "";
+  // Clear input field
+  document.getElementById("user-input").value = "";
 
-      // Scroll to the bottom to show the latest user message
-      chatMessages.scrollTop = chatMessages.scrollHeight;
+  // Scroll to the bottom to show the latest user message
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 
-      // Simulate bot response using fetch
-      // (Replace "/get_response" with your actual backend endpoint)
-      fetch("/get_response", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: userInput }),
-      })
-      .then(response => response.json())
-      .then(data => {
-        const botMessage = document.createElement("div");
-        botMessage.className = "message bot";
-        botMessage.textContent = data.response;
-        chatMessages.appendChild(botMessage);
+  // Simulate bot response using fetch
+  fetch("/get_response", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ message: userInput }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    const botMessage = document.createElement("div");
+    botMessage.className = "message bot";
+    botMessage.innerHTML = data.response; // Use innerHTML to render <br> tags
+    chatMessages.appendChild(botMessage);
 
-        // Scroll to the bottom again after bot message arrives
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
+    // Scroll to the bottom again after bot message arrives
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Close chat if user says exit, bye, or goodbye
+    if (userInput.toLowerCase().includes("exit") || userInput.toLowerCase().includes("bye") || userInput.toLowerCase().includes("goodbye")) {
+      setTimeout(() => {
+        toggleChat(); // Close the chat window
+      }, 2000); // Wait 2 seconds before closing
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+  });
+}
+    // Add event listener for the "Enter" key
+    document.getElementById("user-input").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Prevent the default action (e.g., form submission)
+        sendMessage(); // Call the sendMessage function
+      }
+    });
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("/get_feedback")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("like-count").textContent = data.likes;
+                document.getElementById("dislike-count").textContent = data.dislikes;
+            });
+    });
+
+    function sendFeedback(action) {
+        fetch("/feedback", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("like-count").textContent = data.likes;
+            document.getElementById("dislike-count").textContent = data.dislikes;
+            alert(data.message);
+        })
+        .catch(error => console.error("Error:", error));
     }
 </script>
 </body>
-    <footer style="text-align:right;">
+    <footer style="text-align:center;">
 
         <p><font color="01F9C6">&copy; 2025 PVP Polytechnic. All rights reserved.<br>Powered by NRVPs</font></p>
     </footer>

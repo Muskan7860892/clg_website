@@ -98,3 +98,9 @@ class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.String(200), nullable=False)
     pdf_filename = db.Column(db.String(200), nullable=True)
+
+class Feedback(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_ip = db.Column(db.String(50), unique=True)
+    like = db.Column(db.Boolean, default=False)
+    dislike = db.Column(db.Boolean, default=False)

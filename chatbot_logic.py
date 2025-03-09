@@ -6,10 +6,12 @@ import string
 # Load spaCy model
 nlp = spacy.load("en_core_web_sm")
 
+# Initialize phrase matcher
 matcher = PhraseMatcher(nlp.vocab)
 
 # Intent Mapping with Variations
 response_map = {
+    "hello": ["hello", "hi", "hey", "greetings"],  # Add "hello" and "hi" here
     "admission_process": [
         "admission", "apply", "how to join", "entry process", "enrollment", "admission details",
         "enroll", "how to enroll", "admission procedure", "application process", "how to get admission",
@@ -68,11 +70,14 @@ response_map = {
     "scope_after_diploma": [
         "career after diploma", "what after diploma", "higher studies", "job opportunities", "future scope",
         "what can I do after diploma", "options after diploma", "career options after diploma"
-    ]
+    ],
+    "exit": ["exit", "bye", "goodbye", "see you", "quit"]  # Add "exit", "bye", and "goodbye" here
 }
 
 # Predefined Responses for Each Intent
 responses_data = {
+    "hello": "Hello! How can I help you today?",
+    "hi": "Hi! Welcome to PVP Polytechnic Chatbot. How can I assist you?",
     "admission_process": "Our admission process is open! Visit our admissions page for details.",
     "courses": (
         "We offer diploma courses:\n1. Civil Engineering\n2. Mechanical Engineering\n3. Automobile Engineering\n"
@@ -99,7 +104,7 @@ responses_data = {
     ),
     "entrance_exam": "No, admission is merit-based for diploma courses. However, for some special categories, there might be an internal assessment or interview.",
     "principal": (
-        "The Principal of PVP Polytechnic is **Rajashekara M N**.\n"
+        "The Principal of PVP Polytechnic is Rajashekara M N.\n"
         "📧 Email: principal@pvppolytechnic.org\n📞 Phone: 080-23211559\n"
         "For more details, visit: [PVP Polytechnic](https://www.pvppolytechnic.org/)"
     ),
@@ -110,7 +115,8 @@ responses_data = {
         "**🏛️ Govt Jobs:** Railways (RRB JE), PSUs (BHEL, NTPC, ISRO), SSC JE, PWD, Police.\n"
         "**🏢 Private Jobs:** IT, Automobile, Manufacturing, Construction, and Electronics industries.\n"
         "**💼 Business/Freelancing:** Start workshops, IT consulting, CAD designing, or MSME businesses."
-    )
+    ),
+    "exit": "Goodbye! Have a great day. If you have more questions, feel free to ask anytime."  # Response for exit, bye, goodbye
 }
 
 # Create a dictionary of valid words/phrases for spell correction

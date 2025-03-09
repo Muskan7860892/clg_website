@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, session, send_from_directory, jsonify
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from models import db, User, Branch, Staff, HOD, BranchImages, Lecturer, Management, Principal, CellMember, Notification, GalleryImage
+from models import db, User, Branch, Staff, HOD, BranchImages, Lecturer, Management, Principal, CellMember, Notification, GalleryImage, Feedback
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from chatbot_logic import get_response
@@ -61,11 +61,36 @@ def home():
     notifications = Notification.query.order_by(Notification.id.desc()).all()
     return render_template("base.html", notifications=notifications, views=views)
 
+@app.route("/get_feedback", methods=["GET"])
+def get_feedback():
+    likes = Feedback.query.filter_by(like=True).count()
+    dislikes = Feedback.query.filter_by(dislike=True).count()
+    return jsonify({"likes": likes, "dislikes": dislikes})
+
+@app.route("/feedback", methods=["POST"])
+def feedback():
+    user_ip = request.remote_addr  # Get User IP to prevent multiple likes
+    action = request.json.get("action")
+
+    feedback = Feedback.query.filter_by(user_ip=user_ip).first()
+
+    if feedback:  # If user has already given feedback, prevent multiple votes
+        return jsonify({"message": "You have already given feedback!"})
+
+    new_feedback = Feedback(user_ip=user_ip, like=(action == "like"), dislike=(action == "dislike"))
+    db.session.add(new_feedback)
+    db.session.commit()
+
+    likes = Feedback.query.filter_by(like=True).count()
+    dislikes = Feedback.query.filter_by(dislike=True).count()
+
+    return jsonify({"likes": likes, "dislikes": dislikes, "message": "Feedback recorded!"})
 
 @app.route("/get_response", methods=["POST"])
 def chatbot_response():
     user_input = request.json.get("message")
     response = get_response(user_input)
+    response = response.replace("\n", "<br>")
     return jsonify({"response": response})
 
 @app.route("/about")
