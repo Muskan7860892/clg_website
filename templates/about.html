@@ -142,6 +142,22 @@ body {
 .back-to-home:hover {
     background-color: #0056b3;
 }
+.members-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.member-card {
+    margin: 10px;
+    text-align: center;
+}
+
+.member-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+}
 
 /* 🌟 Responsive Design - Mobile Screens 🌟 */
 @media screen and (max-width: 768px) {
@@ -177,6 +193,15 @@ body {
         font-size: 14px;
         padding: 8px 12px;
     }
+    .members-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .member-card img {
+        width: 80px; /* Reduce image size for mobile */
+        height: 80px;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -192,6 +217,15 @@ body {
     .back-button, .back-to-home {
         font-size: 14px;
         padding: 8px 10px;
+    }
+    .members-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .member-card img {
+        width: 80px; /* Reduce image size for mobile */
+        height: 80px;
     }
 }
 
@@ -283,9 +317,9 @@ body {
                 <li>Soft-skills training</li>
             </ul>
             <h4>Members</h4>
-            <div style="display: flex; flex-wrap: wrap;">
+            <div class="members-container" >
                 {% for member in members['Placement'] %}
-                <div style="margin: 10px; text-align: center;">
+                <div class="member-card" >
                     <img src="{{ url_for('static', filename='management/' + member.image) }}" alt="Member" width="100" height="100" style="border-radius: 10px;">
                     <p>{{ member.name }}</p>
                 </div>
@@ -305,9 +339,9 @@ body {
                 <li>Helping underprivileged communities</li>
             </ul>
             <h4>Members</h4>
-            <div style="display: flex; flex-wrap: wrap;">
+            <div class="members-container" >
                 {% for member in members['NSS'] %}
-                <div style="margin: 10px; text-align: center;">
+                <div class="member-card">
                     <img src="{{ url_for('static', filename='management/' + member.image) }}" alt="Member" width="100" height="100" style="border-radius: 10px;">
                     <p>{{ member.name }}</p>
                 </div>
@@ -327,9 +361,9 @@ body {
                 <li>Annual Sports Meet</li>
             </ul>
             <h4>Members</h4>
-            <div style="display: flex; flex-wrap: wrap;">
+            <div class="members-container" >
                 {% for member in members['Sports'] %}
-                <div style="margin: 10px; text-align: center;">
+                <div class="member-card">
                     <img src="{{ url_for('static', filename='management/' + member.image) }}" alt="Member" width="100" height="100" style="border-radius: 10px;">
                     <p>{{ member.name }}</p>
                 </div>
@@ -349,9 +383,9 @@ body {
                 <li>Promotes awareness programs regarding anti-ragging policies</li>
             </ul>
             <h4>Members</h4>
-            <div style="display: flex; flex-wrap: wrap;">
+            <div class="members-container" >
                 {% for member in members['Anti-Ragging Committee'] %}
-                <div style="margin: 10px; text-align: center;">
+                <div class="member-card">
                     <img src="{{ url_for('static', filename='management/' + member.image) }}" alt="Member" width="100" height="100" style="border-radius: 10px;">
                     <p>{{ member.name }}</p>
                 </div>
@@ -372,9 +406,9 @@ body {
             </ul>
 
             <h4>Members</h4>
-            <div style="display: flex; flex-wrap: wrap;">
+            <div class="members-container" >
                 {% for member in members['Anti-Ragging Squad'] %}
-                <div style="margin: 10px; text-align: center;">
+                <div class="member-card">
                     <img src="{{ url_for('static', filename='management/' + member.image) }}" alt="Member" width="100" height="100" style="border-radius: 10px;">
                     <p>{{ member.name }}</p>
                 </div>
@@ -395,9 +429,9 @@ body {
                 <li>Works in collaboration with security and administration for a safer campus.</li>
             </ul>
             <h4>Members</h4>
-            <div style="display: flex; flex-wrap: wrap;">
+            <div class="members-container" >
                 {% for member in members['WSW GR Cell'] %}
-                <div style="margin: 10px; text-align: center;">
+                <div class="member-card">
                     <img src="{{ url_for('static', filename='management/' + member.image) }}" alt="Member" width="100" height="100" style="border-radius: 10px;">
                     <p>{{ member.name }}</p>
                 </div>
@@ -415,9 +449,9 @@ body {
                 <li>Providing counseling and support</li>
             </ul>
             <h4>Members</h4>
-            <div style="display: flex; flex-wrap: wrap;">
+            <div class="members-container" >
                 {% for member in members['Internal Compliant Committee'] %}
-                <div style="margin: 10px; text-align: center;">
+                <div class="member-card">
                     <img src="{{ url_for('static', filename='management/' + member.image) }}" alt="Member" width="100" height="100" style="border-radius: 10px;">
                     <p>{{ member.name }}</p>
                 </div>
@@ -436,9 +470,9 @@ body {
                 <li>Maintaining confidentiality and fairness</li>
             </ul>
             <h4>Members</h4>
-            <div style="display: flex; flex-wrap: wrap;">
+            <div class="members-container" >
                 {% for member in members['Online Grievance Redressal Committee'] %}
-                <div style="margin: 10px; text-align: center;">
+                <div class="member-card">
                     <img src="{{ url_for('static', filename='management/' + member.image) }}" alt="Member" width="100" height="100" style="border-radius: 10px;">
                     <p>{{ member.name }}</p>
                 </div>
@@ -457,9 +491,9 @@ body {
                 <li>Conducting awareness programs on government schemes</li>
             </ul>
             <h4>Members</h4>
-            <div style="display: flex; flex-wrap: wrap;">
+            <div class="members-container" >
                 {% for member in members['SCST Committee'] %}
-                <div style="margin: 10px; text-align: center;">
+                <div class="member-card">
                     <img src="{{ url_for('static', filename='management/' + member.image) }}" alt="Member" width="100" height="100" style="border-radius: 10px;">
                     <p>{{ member.name }}</p>
                 </div>
@@ -478,9 +512,9 @@ body {
                 <li>Conducting feedback mechanisms for continuous improvement</li>
             </ul>
             <h4>Members</h4>
-            <div style="display: flex; flex-wrap: wrap;">
+            <div class="members-container" >
                 {% for member in members['IQAC Committee'] %}
-                <div style="margin: 10px; text-align: center;">
+                <div class="member-card">
                     <img src="{{ url_for('static', filename='management/' + member.image) }}" alt="Member" width="100" height="100" style="border-radius: 10px;">
                     <p>{{ member.name }}</p>
                 </div>

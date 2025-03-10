@@ -113,6 +113,20 @@
             height: 100%;
             object-fit: contain; /* Ensures the full image is visible */
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #ff6600;
+            color: white;
+        }
 
     </style>
 </head>
@@ -120,7 +134,7 @@
 
 <!-- ✅ Fixed Header -->
 <div class="header">
-    Upcoming Sports Events
+    Library Gallery
     <div class="nav">
         <a href="/gallery">Back to Gallery</a>
         <a href="/">Back to Home</a>
@@ -131,11 +145,36 @@
 <div class="content">
     <div class="sports-events">
         <ul>
-            <li>🏀 Basketball Tournament</li>
-            <li>⚽ Football Championship</li>
-            <li>🏸 Badminton Open</li>
-            <li>🏃‍♂️ Athletics Meet</li>
+            <li>🎓 Engineering Textbooks</li>
+            <li>📑 Research Journals</li>
+            <li>📚 E-Books & Digital Resources</li>
+            <li>📰 Magazines & Newspapers</li>
+            <li>💻 Computerized Library Management</li>
         </ul>
+    </div>
+    <div>
+    <h3>⏰ Library Timings:</h3>
+    <table>
+        <tr>
+            <th>Day</th>
+            <th>Opening Time</th>
+            <th>Closing Time</th>
+        </tr>
+        <tr>
+            <td>Monday - Friday</td>
+            <td>9:00 AM</td>
+            <td>4:00 PM</td>
+        </tr>
+        <tr>
+            <td>Saturday</td>
+            <td>9:00 AM</td>
+            <td>1:00 PM</td>
+        </tr>
+        <tr>
+            <td>Sunday</td>
+            <td colspan="2">Closed</td>
+        </tr>
+    </table>
     </div>
     <div class="gallery">
         {% for img in library %}

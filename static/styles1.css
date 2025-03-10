@@ -5,7 +5,7 @@ body {
     padding: 0;
     background: url('/static/images/background1.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #fff;
+    color: #EAEAEA;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,15 +66,15 @@ nav ul li {
 }
 
 nav ul li a {
-    color: black;
+    color:#EAEAEA;
     text-decoration: none;
     padding: 10px 20px;
 
-    background: #FFC0CB;
+    background: #16213E;
 }
 
 nav ul li a:hover {
-    background: #ffcc00;
+    background: #FDC500;
     color: #000;
 }
 
@@ -104,8 +104,7 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-
-    color: #fff;
+    color: #F8F6FA;
 }
 .marquee{
         font-weight:bold;
