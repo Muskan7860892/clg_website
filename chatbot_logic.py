@@ -20,7 +20,7 @@ response_map = {
     "courses": [
         "available courses", "programs", "what courses", "diploma courses", "list of courses", "all courses",
         "what are the courses", "which courses are available", "what programs are offered", "tell me about the courses",
-        "course list", "what can I study", "what are the programs", "what are the diploma courses"
+        "course list", "branches available in this clg","what can I study", "branches are","what are the programs", "what are the diploma courses"
     ],
     "facilities": [
         "amenities", "infrastructure", "what facilities", "hostel", "library", "sports complex", "campus facilities",
