@@ -172,14 +172,14 @@ h2 {
     border-radius: 5px;
 }
 @keyframes slideBackground {
-    0%   { background-image: url('/static/images/background1.jpg'); opacity: 1; }
-    14%  { background-image: url('/static/images/background2.jpg'); opacity: 1; }
+    0%   { background-image: url('/static/images/backgroundstatue.jpg'); opacity: 1; }
+    14%  { background-image: url('/static/images/backgroundstatue.jpg'); opacity: 1; }
     28%  { background-image: url('/static/images/background5.jpg'); opacity: 1; }
     42%  { background-image: url('/static/images/background6.jpg'); opacity: 1; }
     57%  { background-image: url('/static/images/background7.jpg'); opacity: 1; }
     71%  { background-image: url('/static/images/background1.jpg'); opacity: 1; }
-    85%  { background-image: url('/static/images/background2.jpg'); opacity: 1; }
-    100% { background-image: url('/static/images/background5.jpg'); opacity: 1; }
+    85%  { background-image: url('/static/images/backgroundclg.jpg'); opacity: 1; }
+    100% { background-image: url('/static/images/backgroundclg.jpg'); opacity: 1; }
 }
 @keyframes fadeEffect {
     from { opacity: 0; transform: scale(5s); }
